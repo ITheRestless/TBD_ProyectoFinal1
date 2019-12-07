@@ -1,0 +1,41 @@
+CREATE TABLE usuarios(
+    usr_correo VARCHAR(255) PRIMARY KEY,
+    usr_nombre VARCHAR(255) NOT NULL,
+    usr_pwd CHAR(30) NOT NULL,
+    usr_currency INTEGER NOT NULL,
+    usr_fecha_creacion DATETIME NOT NULL,
+    ses_id INTEGER NOT NULL
+);
+
+CREATE TABLE sesiones(
+    ses_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    ses_token CHAR(32) NOT NULL,
+    ses_ip VARCHAR(15) NOT NULL,
+    ses_inicio DATETIME NOT NULL,
+    ses_fin DATETIME NULL,
+    ses_ult_act DATETIME NOT NULL,
+    usr_id VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE roles(
+    rol_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    rol_nombre VARCHAR(255) NOT NULL,
+    ses_id INTEGER NOT NULL
+);
+
+CREATE TABLE roles_usuario(
+    ru_tiempo DATETIME NOT NULL,
+    usr_id VARCHAR(255) NOT NULL,
+    rol_id INTEGER NOT NULL,
+    ses_id INTEGER NOT NULL
+);
+
+CREATE TABLE permisos(
+    perm_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    perm_permiso CHAR(7) NOT NULL,
+    perm_tiempo DATETIME NOT NULL,
+    ses_id INTEGER NOT NULL,
+    rol_id INTEGER NOT NULL
+);
+
+scric
