@@ -46,8 +46,9 @@ public class Conexion {
         return conexion;
     }
     
-    public void Login() {
-        
+    public void LoginUSR(String pass, String UsrId) {
+        conectarUSR();
+        JTable tabla = new JTable();
     }
 
     public void desconectar() {
