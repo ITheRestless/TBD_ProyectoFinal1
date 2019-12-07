@@ -47,16 +47,16 @@ CREATE TABLE inventario_uni(
     ses_id INTEGER NOT NULL,
     un_id INTEGER NOT NULL
 );
-
+_____
 CREATE TABLE unidades(
     un_id INTEGER AUTO_INCREMENT PRIMARY KEY,
     un_nombre VARCHAR(30) NOT NULL,
     un_hp INTEGER NOT NULL,
     un_rareza VARCHAR(3) NOT NULL,
     un_atkinc TINYINT NOT NULL,
-    un_img VARCHAR NOT NULL,
-    un_sprite VARCHAR NOT NULL,
-    un_icono VARCHAR NOT NULL,
+    un_img VARCHAR(255) NOT NULL,
+    un_sprite VARCHAR(255) NOT NULL,
+    un_icono VARCHAR(255) NOT NULL,
     ses_id INTEGER NOT NULL
 );
 
@@ -70,7 +70,7 @@ CREATE TABLE log(
 
 CREATE TABLE misiones(
     mis_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    mis_nombre VARCHAR NOT NULL,
+    mis_nombre VARCHAR(255) NOT NULL,
     ses_id INTEGER NOT NULL
 );
 
@@ -88,5 +88,92 @@ CREATE TABLE enemigos(
     ene_sprite VARCHAR(255),
     ses_id INTEGER NOT NULL
 );
+______________________________________________
+CONSTRAINTS:
+ALTER TABLE usuarios
+ADD CONSTRAINT ses2usr 
+FOREIGN KEY (ses_id) REFERENCES sesiones(ses_id);
+
+ALTER TABLE roles_usuario
+ADD CONSTRAINT usr2rolusu
+FOREIGN KEY (usr_id) REFERENCES usuarios(usr_id);
+
+ALTER TABLE roles_usuario
+ADD CONSTRAINT rol2rolusu
+FOREIGN KEY (rol_id) REFERENCES roles(rol_id);
+
+ALTER TABLE roles_usuario
+ADD CONSTRAINT ses2rolusu
+FOREIGN KEY (ses_id) REFERENCES sesiones(ses_id);
+
+ALTER TABLE roles
+ADD CONSTRAINT ses2rol
+FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+
+ALTER TABLE sesiones
+ADD CONSTRAINT usu2ses
+FOREIGN KEY (usr_correo) REFERENCES
+usuarios(usr_correo);
+
+ALTER TABLE permisos
+ADD CONSTRAINT ses2perm
+FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+
+ALTER TABLE permisos
+ADD CONSTRAINT rol2perm
+FOREIGN KEY (rol_id) REFERENCES
+roles (rol_id);
+
+ALTER TABLE inventario_uni
+ADD CONSTRAINT ses2invuni
+FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+
+ALTER TABLE inventario_uni
+ADD CONSTRAINT unid2inveuni
+FOREIGN KEY (un_id) REFERENCES unidades (un_id);
+
+ALTER TABLE unidades
+ADD CONSTRAINT ses2uni
+FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+
+ALTER TABLE log
+ADD CONSTRAINT invuni2log1
+FOREIGN KEY (uni1) REFERENCES inventario_uni (inv_un_id);
+
+ALTER TABLE log
+ADD CONSTRAINT invuni2log2
+FOREIGN KEY (uni2) REFERENCES inventario_uni (inv_un_id);
+
+ALTER TABLE log
+ADD CONSTRAINT invuni2log3
+FOREIGN KEY (uni3) REFERENCES inventario_uni (inv_un_id);
+
+ALTER TABLE log
+ADD CONSTRAINT ses2log
+FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+
+ALTER TABLE log
+ADD CONSTRAINT mis2log
+FOREIGN KEY (id_mision) REFERENCES misiones (id_mision);
+
+ALTER TABLE misiones
+ADD CONSTRAINT ses2mis
+FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+
+ALTER TABLE misiones_enemigos
+ADD CONSTRAINT ses2misen
+FOREIGN KEY (ses_id) REFERENCES sesiones(ses_id);
+
+ALTER TABLE misiones_enemigos
+ADD CONSTRAINT ene2misene
+FOREIGN KEY (ene_id) REFERENCES enemigos(ene_id);
+
+ALTER TABLE misiones_enemigos
+ADD CONSTRAINT mis2misene
+FOREIGN KEY (mis_id) REFERENCES misiones(mis_id);
+
+ALTER TABLE enemigos
+ADD CONSTRAINT ses2ene
+FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
 
 scric
