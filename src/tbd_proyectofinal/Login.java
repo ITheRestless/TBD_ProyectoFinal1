@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package tbd_proyectofinal;
 
 import java.math.BigInteger;
@@ -213,5 +212,3 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField txfUsruaioL;
     // End of variables declaration//GEN-END:variables
 }
-=======
->>>>>>> 104a9bc879877dab5198ec1e61cb2d5543266c6c
