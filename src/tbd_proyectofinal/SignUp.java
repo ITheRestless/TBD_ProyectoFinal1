@@ -35,68 +35,84 @@ public class SignUp extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txfContraseñaS = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        txfWarning1 = new javax.swing.JLabel();
+        txfWarning2 = new javax.swing.JLabel();
+        txfWarning3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(500, 200));
+        setMaximumSize(new java.awt.Dimension(360, 347));
+        setMinimumSize(new java.awt.Dimension(360, 347));
+        getContentPane().setLayout(null);
 
+        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         jLabel1.setText("Registrate para empezar a jugar!");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(20, 10, 306, 22);
 
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 11)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre de usuario:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(67, 50, 117, 14);
 
         txfUsuarioS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfUsuarioSActionPerformed(evt);
             }
         });
+        getContentPane().add(txfUsuarioS);
+        txfUsuarioS.setBounds(67, 70, 214, 20);
 
+        jLabel3.setFont(new java.awt.Font("Bahnschrift", 1, 11)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Correo:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(67, 119, 45, 14);
+        getContentPane().add(txfCorreoS);
+        txfCorreoS.setBounds(67, 139, 214, 20);
 
+        jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 11)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Contraseña:");
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(67, 188, 72, 14);
+
+        txfContraseñaS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfContraseñaSActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txfContraseñaS);
+        txfContraseñaS.setBounds(67, 208, 214, 20);
 
         jButton1.setText("Registrase");
+        getContentPane().add(jButton1);
+        jButton1.setBounds(67, 257, 83, 23);
+        getContentPane().add(txfWarning1);
+        txfWarning1.setBounds(67, 96, 214, 17);
+        getContentPane().add(txfWarning2);
+        txfWarning2.setBounds(67, 165, 214, 17);
+        getContentPane().add(txfWarning3);
+        txfWarning3.setBounds(67, 234, 214, 17);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jButton1))
-                        .addGap(0, 43, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txfContraseñaS, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txfCorreoS, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txfUsuarioS))
-                        .addContainerGap())))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txfUsuarioS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txfCorreoS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txfContraseñaS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
+        jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(198, 257, 83, 23);
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Fondos/SignUp.gif"))); // NOI18N
+        jLabel5.setMaximumSize(new java.awt.Dimension(360, 347));
+        jLabel5.setMinimumSize(new java.awt.Dimension(360, 347));
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(0, 0, 360, 350);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -104,6 +120,15 @@ public class SignUp extends javax.swing.JFrame {
     private void txfUsuarioSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfUsuarioSActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfUsuarioSActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txfContraseñaSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfContraseñaSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfContraseñaSActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,12 +167,17 @@ public class SignUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField txfContraseñaS;
     private javax.swing.JTextField txfCorreoS;
     private javax.swing.JTextField txfUsuarioS;
+    private javax.swing.JLabel txfWarning1;
+    private javax.swing.JLabel txfWarning2;
+    private javax.swing.JLabel txfWarning3;
     // End of variables declaration//GEN-END:variables
 }
