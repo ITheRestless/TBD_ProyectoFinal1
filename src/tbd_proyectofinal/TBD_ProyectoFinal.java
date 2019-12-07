@@ -1,6 +1,6 @@
 package tbd_proyectofinal;
 
-// @https://github.com/ITheRestless
+// @https://github.com/ITheRestless/TBD_ProyectoFinal1
 
 /**
  * @authors Mauricio Emmanuel Avitia Maturino
