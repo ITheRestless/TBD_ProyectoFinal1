@@ -1,0 +1,13 @@
+Hora de inicio del programa: 
+3:49:6    11/7/2019
+
+Germán Alejo Castro Ortega
+ No.Ctrl: 17130769
+
+Josué Manuel Romero Canáan
+ No Ctrl: 17130835
+
+Número de hilos creados: 999
+
+Hora a la que terminó el programa:
+3:49:6    11/7/2019
