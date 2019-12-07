@@ -84,7 +84,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabel1.setText("Usuario");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(70, 10, 60, 14);
+        jLabel1.setBounds(70, 10, 40, 14);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -98,6 +98,7 @@ public class Login extends javax.swing.JFrame {
         txfContraseñaL.setBounds(70, 160, 207, 20);
 
         jButton1.setText("Entrar");
+        jButton1.setBorder(null);
         jButton1.setBorderPainted(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,9 +106,10 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(70, 240, 63, 23);
+        jButton1.setBounds(70, 240, 31, 15);
 
         jButton2.setText("Registrarse");
+        jButton2.setBorder(null);
         jButton2.setBorderPainted(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +117,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(180, 240, 87, 23);
+        jButton2.setBounds(180, 240, 55, 15);
 
         jLabel3.setFont(new java.awt.Font("Bahnschrift", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -156,7 +158,8 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        new MenuPrincipal().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
