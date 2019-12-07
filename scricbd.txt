@@ -38,4 +38,55 @@ CREATE TABLE permisos(
     rol_id INTEGER NOT NULL
 );
 
+CREATE TABLE inventario_uni(
+    inv_un_ud INTEGER AUTO_INCREMENT PRIMARY KEY,
+    inv_un_obtencion DATETIME NOT NULL,
+    inv_un_nivel TINYINT NOT NULL,
+    inv_un_exp TINYINT NOT NULL,
+    inv_un_atk SMALLINT NOT NULL,
+    ses_id INTEGER NOT NULL,
+    un_id INTEGER NOT NULL
+);
+
+CREATE TABLE unidades(
+    un_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    un_nombre VARCHAR(30) NOT NULL,
+    un_hp INTEGER NOT NULL,
+    un_rareza VARCHAR(3) NOT NULL,
+    un_atkinc TINYINT NOT NULL,
+    un_img VARCHAR NOT NULL,
+    un_sprite VARCHAR NOT NULL,
+    un_icono VARCHAR NOT NULL,
+    ses_id INTEGER NOT NULL
+);
+
+CREATE TABLE log(
+    uni1 INTEGER NOT NULL, 
+    uni2 INTEGER NOT NULL,
+    uni3 INTEGER NOT NULL,
+    ses_id INTEGER NOT NULL,
+    id_mision INTEGER NOT NULL
+);
+
+CREATE TABLE misiones(
+    mis_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    mis_nombre VARCHAR NOT NULL,
+    ses_id INTEGER NOT NULL
+);
+
+CREATE TABLE misiones_enemigos(
+    ses_id INTEGER NOT NULL,
+    ene_id INTEGER NOT NULL,
+    mis_id INTEGER NOT NULL
+);
+
+CREATE TABLE enemigos(
+    ene_id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    ene_nombre VARCHAR(255) NOT NULL,
+    ene_atk INTEGER NOT NULL,
+    ene_hp INTEGER NOT NULL,
+    ene_sprite VARCHAR(255),
+    ses_id INTEGER NOT NULL
+);
+
 scric
