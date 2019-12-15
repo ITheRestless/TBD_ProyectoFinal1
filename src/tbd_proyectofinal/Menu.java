@@ -50,11 +50,12 @@ public class Menu extends javax.swing.JFrame {
         ButtFondos.setForeground(new java.awt.Color(255, 255, 255));
         ButtFondos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Gifs/gems.gif"))); // NOI18N
         ButtFondos.setText("Fondos");
+        ButtFondos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ButtFondos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(ButtFondos);
-        ButtFondos.setBounds(481, 14, 184, 140);
+        ButtFondos.setBounds(480, 80, 184, 140);
         getContentPane().add(UltimaUnidad);
-        UltimaUnidad.setBounds(198, 53, 279, 247);
+        UltimaUnidad.setBounds(200, 50, 280, 247);
 
         ButtInvocar.setFont(new java.awt.Font("Bahnschrift", 1, 24)); // NOI18N
         ButtInvocar.setForeground(new java.awt.Color(255, 255, 255));
@@ -73,15 +74,16 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(ButtInvocar);
-        ButtInvocar.setBounds(10, 160, 184, 150);
+        ButtInvocar.setBounds(10, 230, 184, 150);
 
         ButtAdventures.setFont(new java.awt.Font("Bahnschrift", 1, 24)); // NOI18N
         ButtAdventures.setForeground(new java.awt.Color(255, 255, 255));
         ButtAdventures.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Gifs/ButtAveturas.gif"))); // NOI18N
         ButtAdventures.setText("Aventuras");
+        ButtAdventures.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ButtAdventures.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(ButtAdventures);
-        ButtAdventures.setBounds(481, 160, 184, 150);
+        ButtAdventures.setBounds(480, 230, 184, 150);
 
         ButtUnidades.setBackground(new java.awt.Color(102, 102, 102));
         ButtUnidades.setFont(new java.awt.Font("Bahnschrift", 1, 24)); // NOI18N
@@ -96,7 +98,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(ButtUnidades);
-        ButtUnidades.setBounds(10, 11, 184, 140);
+        ButtUnidades.setBounds(10, 80, 184, 140);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
