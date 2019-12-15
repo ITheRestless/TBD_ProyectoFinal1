@@ -27,7 +27,6 @@ public class SignUp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txfUsuarioS = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -39,25 +38,20 @@ public class SignUp extends javax.swing.JFrame {
         txfWarning2 = new javax.swing.JLabel();
         txfWarning3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 200));
-        setMaximumSize(new java.awt.Dimension(360, 347));
-        setMinimumSize(new java.awt.Dimension(360, 347));
+        setMaximumSize(new java.awt.Dimension(360, 357));
+        setMinimumSize(new java.awt.Dimension(360, 357));
         getContentPane().setLayout(null);
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
-        jLabel1.setText("Registrate para empezar a jugar!");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 10, 306, 22);
-
-        jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nombre de usuario:");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(67, 50, 117, 14);
+        jLabel2.setBounds(20, 40, 170, 17);
 
         txfUsuarioS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -65,21 +59,21 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txfUsuarioS);
-        txfUsuarioS.setBounds(67, 70, 214, 20);
+        txfUsuarioS.setBounds(20, 60, 310, 30);
 
-        jLabel3.setFont(new java.awt.Font("Bahnschrift", 1, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Correo:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(67, 119, 45, 14);
+        jLabel3.setBounds(20, 110, 150, 20);
         getContentPane().add(txfCorreoS);
-        txfCorreoS.setBounds(67, 139, 214, 20);
+        txfCorreoS.setBounds(20, 130, 310, 30);
 
-        jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Contraseña:");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(67, 188, 72, 14);
+        jLabel4.setBounds(20, 180, 120, 17);
 
         txfContraseñaS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,18 +81,24 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txfContraseñaS);
-        txfContraseñaS.setBounds(67, 208, 214, 20);
+        txfContraseñaS.setBounds(20, 200, 310, 30);
 
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Registrase");
         getContentPane().add(jButton1);
-        jButton1.setBounds(67, 257, 83, 23);
+        jButton1.setBounds(20, 260, 120, 40);
         getContentPane().add(txfWarning1);
-        txfWarning1.setBounds(67, 96, 214, 17);
+        txfWarning1.setBounds(120, 90, 214, 17);
         getContentPane().add(txfWarning2);
-        txfWarning2.setBounds(67, 165, 214, 17);
+        txfWarning2.setBounds(120, 160, 214, 17);
         getContentPane().add(txfWarning3);
-        txfWarning3.setBounds(67, 234, 214, 17);
+        txfWarning3.setBounds(120, 230, 214, 17);
 
+        jButton2.setBackground(new java.awt.Color(0, 0, 0));
+        jButton2.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Volver");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,13 +106,22 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(198, 257, 83, 23);
+        jButton2.setBounds(210, 260, 120, 40);
+
+        jLabel1.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("  Registrarse");
+        jLabel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        jLabel1.setOpaque(true);
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(110, 10, 130, 30);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Fondos/SignUp.gif"))); // NOI18N
         jLabel5.setMaximumSize(new java.awt.Dimension(360, 347));
         jLabel5.setMinimumSize(new java.awt.Dimension(360, 347));
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(0, 0, 360, 350);
+        jLabel5.setBounds(0, 0, 360, 360);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
