@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class Matrix extends javax.swing.JFrame implements Runnable {
     // Se da de alta el arreglo de labels e hilos
     private Tablero [][] juego = new Tablero [60][40];
-    Thread [] t = new Thread[10000];
+    Thread [] t = new Thread[1000];
     
     // Se declaran las variables globales
     Random azar;
@@ -251,7 +251,7 @@ public class Matrix extends javax.swing.JFrame implements Runnable {
         //no se correrán más hilos
         if(t[cont+1]!=null && band){
             try{
-                sleep(100);
+                sleep(1);
                 t[++cont].start(); //iniciamos el hilo de la siguiente posición
                 contador.setText((cont+1)+"");
             }
@@ -262,7 +262,7 @@ public class Matrix extends javax.swing.JFrame implements Runnable {
             //la velocidad
             //la velocidad mínima de mov_y es de 8 milésimas de segundo
             //la velocidad máxima de mov_y es de 16 centésimas de segundo
-            int x, mov_y = 80+azar.nextInt(80);
+            int x, mov_y = 100+azar.nextInt(100);
             x = azar.nextInt(juego.length);
 
             //Enciendo los labels disponibles.
