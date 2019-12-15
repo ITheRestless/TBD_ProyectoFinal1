@@ -1,5 +1,10 @@
+CREATE DATABASE uwu;
+
+USE uwu;
+
 CREATE TABLE usuarios(
-    usr_correo VARCHAR(255) PRIMARY KEY,
+    usr_id INT(11) AUTO_INCREMENT PRIMARY KEY,
+    usr_correo VARCHAR(255) NOT NULL UNIQUE,
     usr_nombre VARCHAR(255) NOT NULL,
     usr_pwd CHAR(30) NOT NULL,
     usr_currency INTEGER NOT NULL,
@@ -14,7 +19,7 @@ CREATE TABLE sesiones(
     ses_inicio DATETIME NOT NULL,
     ses_fin DATETIME NULL,
     ses_ult_act DATETIME NOT NULL,
-    usr_id VARCHAR(255) NOT NULL
+    usr_id INT(11) NOT NULL
 );
 
 CREATE TABLE roles(
@@ -25,7 +30,7 @@ CREATE TABLE roles(
 
 CREATE TABLE roles_usuario(
     ru_tiempo DATETIME NOT NULL,
-    usr_id VARCHAR(255) NOT NULL,
+    usr_id INT(11) NOT NULL,
     rol_id INTEGER NOT NULL,
     ses_id INTEGER NOT NULL
 );
@@ -47,7 +52,7 @@ CREATE TABLE inventario_uni(
     ses_id INTEGER NOT NULL,
     un_id INTEGER NOT NULL
 );
-_____
+
 CREATE TABLE unidades(
     un_id INTEGER AUTO_INCREMENT PRIMARY KEY,
     un_nombre VARCHAR(30) NOT NULL,
@@ -61,11 +66,10 @@ CREATE TABLE unidades(
 );
 
 CREATE TABLE log(
-    uni1 INTEGER NOT NULL, 
-    uni2 INTEGER NOT NULL,
-    uni3 INTEGER NOT NULL,
+    inv_un_id INTEGER NOT NULL, 
     ses_id INTEGER NOT NULL,
-    id_mision INTEGER NOT NULL
+    id_mision INTEGER NOT NULL,
+    log_fecha DATETIME	
 );
 
 CREATE TABLE misiones(
@@ -88,8 +92,8 @@ CREATE TABLE enemigos(
     ene_sprite VARCHAR(255),
     ses_id INTEGER NOT NULL
 );
-______________________________________________
-CONSTRAINTS:
+
+-- CONSTRAINTS:
 ALTER TABLE usuarios
 ADD CONSTRAINT ses2usr 
 FOREIGN KEY (ses_id) REFERENCES sesiones(ses_id);
@@ -112,8 +116,8 @@ FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
 
 ALTER TABLE sesiones
 ADD CONSTRAINT usu2ses
-FOREIGN KEY (usr_correo) REFERENCES
-usuarios(usr_correo);
+FOREIGN KEY (usr_id) REFERENCES
+usuarios(usr_id);
 
 ALTER TABLE permisos
 ADD CONSTRAINT ses2perm
@@ -137,16 +141,8 @@ ADD CONSTRAINT ses2uni
 FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
 
 ALTER TABLE log
-ADD CONSTRAINT invuni2log1
-FOREIGN KEY (uni1) REFERENCES inventario_uni (inv_un_id);
-
-ALTER TABLE log
-ADD CONSTRAINT invuni2log2
-FOREIGN KEY (uni2) REFERENCES inventario_uni (inv_un_id);
-
-ALTER TABLE log
-ADD CONSTRAINT invuni2log3
-FOREIGN KEY (uni3) REFERENCES inventario_uni (inv_un_id);
+ADD CONSTRAINT invuni2log
+FOREIGN KEY (inv_un_id) REFERENCES inventario_uni (inv_un_ud);
 
 ALTER TABLE log
 ADD CONSTRAINT ses2log
@@ -175,5 +171,3 @@ FOREIGN KEY (mis_id) REFERENCES misiones(mis_id);
 ALTER TABLE enemigos
 ADD CONSTRAINT ses2ene
 FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
-
-scric
