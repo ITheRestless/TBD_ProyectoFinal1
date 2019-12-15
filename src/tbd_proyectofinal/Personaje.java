@@ -10,22 +10,34 @@ package tbd_proyectofinal;
  * @author Jesus
  */
 public class Personaje {
+    private int id;
     private String nombre;
     private int hp;
     private String rareza;
-    private String imagen;
+    //private String imagen;
     private String img;
     private String sprite;
     private String icono;
     
-    public Personaje(String nom, int hp, String rareza, String imagen, String img, String sprite, String icono){
+    public Personaje(int id, String nom, int hp, String rareza, String img, String sprite, String icono){
+        this.id = id;
         this.nombre = nom;
         this.hp = hp;
         this.rareza = rareza;
-        this.imagen = imagen;
+        //this.imagen = imagen;
         this.img = img;
         this.icono = icono;
         this.sprite = sprite;
+    }
+    
+    public Personaje(){
+        id = 0;
+        nombre = "";
+        hp = 0;
+        rareza = "";
+        img = "";
+        icono = "";
+        sprite = "";
     }
     
     public String getNombre(){
@@ -37,9 +49,6 @@ public class Personaje {
     public String getRareza(){
         return rareza;
     }
-    public String getImagen(){
-        return imagen;
-    }
     
     public void setNombre(String nom){
         this.nombre = nom;
@@ -49,9 +58,6 @@ public class Personaje {
     }
     public void setRareza(String rareza){
         this.rareza = rareza;
-    }
-    public void serImagen(String imagen){
-        this.imagen = imagen;
     }
 
     public String getImg() {

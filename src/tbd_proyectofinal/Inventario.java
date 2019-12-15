@@ -7,6 +7,8 @@ package tbd_proyectofinal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +21,9 @@ public class Inventario extends javax.swing.JFrame {
      * Creates new form Inventario
      */
     public ArrayList <Personaje> personajes;
+    public Statement st = null;
+    public ResultSet rs = null;
+    
     
     public class conexionBD{
         Connection con;
@@ -37,7 +42,13 @@ public class Inventario extends javax.swing.JFrame {
         personajes = new ArrayList();
     }
     
-    //public void();
+    public void inventario(){
+        try{
+            
+        }
+        catch(Exception e){
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
