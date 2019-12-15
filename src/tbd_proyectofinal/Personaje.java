@@ -13,13 +13,14 @@ public class Personaje {
     private int id;
     private String nombre;
     private int hp;
+    private int atk;
     private String rareza;
     //private String imagen;
     private String img;
     private String sprite;
     private String icono;
     
-    public Personaje(int id, String nom, int hp, String rareza, String img, String sprite, String icono){
+    public Personaje(int id, String nom, int hp, String rareza, String img, String sprite, String icono, int atk){
         this.id = id;
         this.nombre = nom;
         this.hp = hp;
@@ -28,6 +29,7 @@ public class Personaje {
         this.img = img;
         this.icono = icono;
         this.sprite = sprite;
+        this.atk = atk;
     }
     
     public Personaje(){
@@ -38,6 +40,7 @@ public class Personaje {
         img = "";
         icono = "";
         sprite = "";
+        atk = 0;
     }
     
     public String getNombre(){
@@ -83,6 +86,20 @@ public class Personaje {
     public void setIcono(String icono) {
         this.icono = icono;
     }
-    
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getAtk() {
+        return atk;
+    }
+
+    public void setAtk(int atk) {
+        this.atk = atk;
+    }
 }

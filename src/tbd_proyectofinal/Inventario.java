@@ -23,6 +23,8 @@ public class Inventario extends javax.swing.JFrame {
     public ArrayList <Personaje> personajes;
     public Statement st = null;
     public ResultSet rs = null;
+    public ResultSet rs1 = null;
+    public conexionBD cn;
     
     
     public class conexionBD{
@@ -38,13 +40,18 @@ public class Inventario extends javax.swing.JFrame {
     
     public Inventario() {
         initComponents();
-        conexionBD cn = new conexionBD();
+        cn = new conexionBD();
         personajes = new ArrayList();
     }
     
     public void inventario(){
         try{
-            
+            Personaje pers = new Personaje();
+            st = cn.con.createStatement();
+            rs = st.executeQuery(null);
+            rs1 = st.executeQuery(null);
+            if(rs.next()){
+            }
         }
         catch(Exception e){
         }
