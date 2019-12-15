@@ -5,6 +5,10 @@
  */
 package tbd_proyectofinal;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.ArrayList;
+
 /**
  *
  * @author Mauricio Avitia
@@ -14,9 +18,26 @@ public class Inventario extends javax.swing.JFrame {
     /**
      * Creates new form Inventario
      */
+    public ArrayList <Personaje> personajes;
+    
+    public class conexionBD{
+        Connection con;
+        public conexionBD(){
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/genealogia", "root", "");
+            }
+            catch(Exception e){}
+        }
+    }
+    
     public Inventario() {
         initComponents();
+        conexionBD cn = new conexionBD();
+        personajes = new ArrayList();
     }
+    
+    //public void();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,11 +54,11 @@ public class Inventario extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 581, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 659, Short.MAX_VALUE)
         );
 
         pack();
