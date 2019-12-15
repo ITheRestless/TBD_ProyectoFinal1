@@ -10,41 +10,79 @@ package tbd_proyectofinal;
  * @author Jesus
  */
 public class Personaje {
-    private String _nombre;
-    private int _hp;
-    private String _rareza;
-    private String _imagen;
+    private int id;
+    private String nombre;
+    private int hp;
+    private String rareza;
+    //private String imagen;
+    private String img;
+    private String sprite;
+    private String icono;
     
-    public Personaje(String nom, int hp, String rareza, String imagen){
-        _nombre = nom;
-        _hp = hp;
-        _rareza = rareza;
-        _imagen = imagen;
+    public Personaje(int id, String nom, int hp, String rareza, String img, String sprite, String icono){
+        this.id = id;
+        this.nombre = nom;
+        this.hp = hp;
+        this.rareza = rareza;
+        //this.imagen = imagen;
+        this.img = img;
+        this.icono = icono;
+        this.sprite = sprite;
+    }
+    
+    public Personaje(){
+        id = 0;
+        nombre = "";
+        hp = 0;
+        rareza = "";
+        img = "";
+        icono = "";
+        sprite = "";
     }
     
     public String getNombre(){
-        return _nombre;
+        return nombre;
     }
     public int getHp(){
-        return _hp;
+        return hp;
     }
     public String getRareza(){
-        return _rareza;
-    }
-    public String getImagen(){
-        return _imagen;
+        return rareza;
     }
     
     public void setNombre(String nom){
-        _nombre = nom;
+        this.nombre = nom;
     }
     public void setHp(int hp){
-        _hp = hp;
+        this.hp = hp;
     }
     public void setRareza(String rareza){
-        _rareza = rareza;
+        this.rareza = rareza;
     }
-    public void serImagen(String imagen){
-        _imagen = imagen;
+
+    public String getImg() {
+        return img;
     }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(String sprite) {
+        this.sprite = sprite;
+    }
+
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
+    }
+    
+    
 }
