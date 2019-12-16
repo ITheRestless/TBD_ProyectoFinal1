@@ -27,10 +27,6 @@ import javax.swing.ImageIcon;
  */
 public class CharPull extends javax.swing.JFrame {
     int sesID = 0;
-    
-    /**
-     * Creates new form CharPull
-     */
     ResultSet rs;
     Statement st;
     Conexion cn;
@@ -42,9 +38,9 @@ public class CharPull extends javax.swing.JFrame {
         
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-        
+        String cueri = String.format("SELECT usr_currency FROM usuarios WHERE usuarios.ses_id = %2d", sesID);
+        /*
         try {
-            String cueri = String.format("SELECT usr_currency FROM usuarios WHERE usuarios.ses_id = %2d", sesID);
             st = cn.conexion.createStatement();
             rs = st.executeQuery(cueri);
             if(rs.getInt("usr_currency") < 5)
@@ -54,7 +50,7 @@ public class CharPull extends javax.swing.JFrame {
         } 
         catch (SQLException ex) {
             Logger.getLogger(CharPull.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }
 
     /**
