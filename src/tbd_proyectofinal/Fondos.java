@@ -5,17 +5,25 @@
  */
 package tbd_proyectofinal;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Jesus
  */
 public class Fondos extends javax.swing.JFrame {
-
+    int sesID;
+    
     /**
      * Creates new form Fondos
      */
-    public Fondos() {
+    public Fondos(int sesID) {
         initComponents();
+        this.sesID = sesID;
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -57,6 +65,11 @@ public class Fondos extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Bahnschrift", 0, 11)); // NOI18N
         jButton2.setText("Regresar a menu");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,6 +115,11 @@ public class Fondos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new Menu(sesID).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -132,7 +150,7 @@ public class Fondos extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Fondos().setVisible(true);
+                new Fondos(0).setVisible(true);
             }
         });
     }

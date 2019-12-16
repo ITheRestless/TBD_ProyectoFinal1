@@ -5,17 +5,25 @@
  */
 package tbd_proyectofinal;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Mauricio Avitia
  */
 public class CharPull extends javax.swing.JFrame {
-
+    int sesID = 0;
+    
     /**
      * Creates new form CharPull
      */
-    public CharPull() {
+    public CharPull(int sesID) {
         initComponents();
+        this.sesID = sesID;
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -33,11 +41,11 @@ public class CharPull extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 942, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 704, Short.MAX_VALUE)
         );
 
         pack();
@@ -73,7 +81,7 @@ public class CharPull extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CharPull().setVisible(true);
+                new CharPull(0).setVisible(true);
             }
         });
     }
