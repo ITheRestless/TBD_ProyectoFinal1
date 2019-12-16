@@ -5,6 +5,10 @@
  */
 package tbd_proyectofinal;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mauricio Avitia
@@ -16,6 +20,9 @@ public class SignUp extends javax.swing.JFrame {
      */
     public SignUp() {
         initComponents();
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
 
     /**
@@ -28,17 +35,17 @@ public class SignUp extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        txfUsuarioS = new javax.swing.JTextField();
+        Usuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txfCorreoS = new javax.swing.JTextField();
+        Correo = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txfContraseñaS = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         txfWarning1 = new javax.swing.JLabel();
         txfWarning2 = new javax.swing.JLabel();
         txfWarning3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        Contraseña = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -53,21 +60,21 @@ public class SignUp extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(20, 40, 170, 17);
 
-        txfUsuarioS.addActionListener(new java.awt.event.ActionListener() {
+        Usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfUsuarioSActionPerformed(evt);
+                UsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(txfUsuarioS);
-        txfUsuarioS.setBounds(20, 60, 310, 30);
+        getContentPane().add(Usuario);
+        Usuario.setBounds(20, 60, 310, 30);
 
         jLabel3.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Correo:");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(20, 110, 150, 20);
-        getContentPane().add(txfCorreoS);
-        txfCorreoS.setBounds(20, 130, 310, 30);
+        getContentPane().add(Correo);
+        Correo.setBounds(20, 130, 310, 30);
 
         jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -75,18 +82,15 @@ public class SignUp extends javax.swing.JFrame {
         getContentPane().add(jLabel4);
         jLabel4.setBounds(20, 180, 120, 17);
 
-        txfContraseñaS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfContraseñaSActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txfContraseñaS);
-        txfContraseñaS.setBounds(20, 200, 310, 30);
-
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Registrase");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1);
         jButton1.setBounds(20, 260, 120, 40);
         getContentPane().add(txfWarning1);
@@ -116,6 +120,8 @@ public class SignUp extends javax.swing.JFrame {
         jLabel1.setOpaque(true);
         getContentPane().add(jLabel1);
         jLabel1.setBounds(110, 10, 130, 30);
+        getContentPane().add(Contraseña);
+        Contraseña.setBounds(20, 200, 310, 30);
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Fondos/SignUp.gif"))); // NOI18N
         jLabel5.setMaximumSize(new java.awt.Dimension(360, 347));
@@ -126,18 +132,24 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txfUsuarioSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfUsuarioSActionPerformed
+    private void UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txfUsuarioSActionPerformed
+    }//GEN-LAST:event_UsuarioActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new Login().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void txfContraseñaSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfContraseñaSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfContraseñaSActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int sesID = new Conexion().SignUp(Correo.getText(), Usuario.getText(), Contraseña.getText());
+        
+        if(sesID > 0) {
+            new Menu(sesID).setVisible(true);
+            JOptionPane.showMessageDialog(null, "Bienvenido " + Usuario.getText());
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,6 +187,9 @@ public class SignUp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField Contraseña;
+    private javax.swing.JTextField Correo;
+    private javax.swing.JTextField Usuario;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -182,9 +197,6 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField txfContraseñaS;
-    private javax.swing.JTextField txfCorreoS;
-    private javax.swing.JTextField txfUsuarioS;
     private javax.swing.JLabel txfWarning1;
     private javax.swing.JLabel txfWarning2;
     private javax.swing.JLabel txfWarning3;

@@ -14,7 +14,7 @@ CREATE TABLE usuarios(
 
 CREATE TABLE sesiones(
     ses_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    ses_ip VARCHAR(15) NOT NULL,
+    ses_ip VARCHAR(20) NOT NULL,
     ses_inicio DATETIME NOT NULL,
     ses_fin DATETIME NULL,
     ses_ult_act DATETIME NOT NULL,
@@ -118,7 +118,7 @@ FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
 
 ALTER TABLE sesiones
 ADD CONSTRAINT usu2ses
-FOREIGN KEY (usr_id_creador) REFERENCES usuarios(usr_id);
+FOREIGN KEY (usr_id) REFERENCES usuarios(usr_id);
 
 ALTER TABLE permisos
 ADD CONSTRAINT ses2perm
@@ -180,6 +180,84 @@ FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
 
 -- ______________________________________________________________________________________________________________
 
+set global log_bin_trust_function_creators = 1;
+delimiter ;;
+
+create Procedure Inicializar()
+begin
+		ALTER TABLE usuarios
+		DROP foreign key ses2usr;
+
+		ALTER TABLE roles_usuario
+		DROP foreign key usr2rolusu;
+
+		ALTER TABLE roles_usuario
+		DROP foreign key rol2rolusu;
+
+		ALTER TABLE roles_usuario
+		DROP foreign key ses2rolusu;
+
+		ALTER TABLE roles
+		DROP foreign key ses2rol;
+
+		ALTER TABLE sesiones
+		DROP foreign key usu2ses;
+
+		ALTER TABLE permisos
+		DROP foreign key ses2perm;
+
+		ALTER TABLE permisos
+		DROP foreign key rol2perm;
+
+		insert into usuarios(usr_correo, usr_nombre, usr_pwd, usr_currency, usr_fecha_creacion, ses_id_creador)
+		values('master@mail.com', 'GameMaster', md5('qwert12345'), '5', now(), '1');
+
+		insert into sesiones(ses_ip, ses_inicio, ses_fin, ses_ult_act, usr_id)
+		values('127.0.0.1', now(), null, now(), '1');
+
+		insert into roles(rol_nombre, ses_id_creador)
+		values('super', '1');
+
+		insert into roles_usuario(ru_tiempo, usr_id, rol_id, ses_id_creador)
+		values(now(), '1', '1', '1');
+
+		insert into permisos(perm_permiso, perm_tiempo, ses_id_creador, rol_id)
+		values('FFFFFFF', now(), '1', '1');
+
+		ALTER TABLE usuarios
+		ADD CONSTRAINT ses2usr 
+		FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
+
+		ALTER TABLE roles_usuario
+		ADD CONSTRAINT usr2rolusu
+		FOREIGN KEY (usr_id) REFERENCES usuarios(usr_id);
+
+		ALTER TABLE roles_usuario
+		ADD CONSTRAINT rol2rolusu
+		FOREIGN KEY (rol_id) REFERENCES roles(rol_id);
+
+		ALTER TABLE roles_usuario
+		ADD CONSTRAINT ses2rolusu
+		FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
+
+		ALTER TABLE roles
+		ADD CONSTRAINT ses2rol
+		FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
+
+		ALTER TABLE sesiones
+		ADD CONSTRAINT usu2ses
+		FOREIGN KEY (usr_id) REFERENCES usuarios(usr_id);
+
+		ALTER TABLE permisos
+		ADD CONSTRAINT ses2perm
+		FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
+
+		ALTER TABLE permisos
+		ADD CONSTRAINT rol2perm
+		FOREIGN KEY (rol_id) REFERENCES
+		roles (rol_id);
+end;;
+
 delimiter ;;
 
 create procedure IniSes(id integer)
@@ -210,40 +288,34 @@ end;;
 
 set global log_bin_trust_function_creators = 1;
 delimiter ;;
-
-create function LogIn(correo varchar(255), pass char(255), IP varchar(16))
+create function LogIn(correo varchar(255), pass char(32), IP varchar(20))
 returns integer
 begin
 
 -- Se busca el id de usuario y el de la sesion
-select usr_id into @Uid from sesiones where (usr_correo = correo);
+select usr_id into @Uid from usuarios where (usr_correo = correo);
 select ses_id into @Sid from sesiones where (@Uid = usr_id) AND (IP = ses_ip);
             
 -- si existe un usuario con ese correo
 if (correo in (select usr_correo from usuarios)) then
 
 	-- si la contraseña es correcta
-	if (md5(pass) = (select usr_pass from usuarios where (correo = usr_correo))) then 
+	if (pass = (select usr_pwd from usuarios where (correo = usr_correo))) then 
         
         -- si no hay una sesion con la ip actual, se añade una nueva
         if (IP not in (select ses_ip from sesiones where (sesiones.usr_id = (select usr_id from usuarios where (usr_correo = correo))))) then
             
-            -- guardar id del usuario
-            select usr_id into @id from sesiones where (usr_correo = correo);
-            
             -- insertar nueva sesion con la ip indicada
             insert into sesiones(ses_ip, ses_inicio, ses_fin, ses_ult_act, usr_id) values
-            (IP, now(), null, now(), @id);
+            (IP, now(), null, now(), @Uid);
 		
         else
-			
             -- Se actuaizan los datos de la sesion actual
-            call IniciSes(@Sid);
+            call IniSes(@Sid);
             call doAction(@Sid);
-		
         end if;
     else 
-		set @Sid = -1; 
+		set @Sid = -2; 
     end if;
 else 
 	set @Sid = -1;
@@ -255,16 +327,14 @@ end;;
 
 -- ______________________________________________________________________________________________________________
 
-
 set global log_bin_trust_function_creators = 1;
 delimiter ;;
-
-create function SignUp(correo varchar(255), nombre VARCHAR(255), pwd VARCHAR(255), currency INTEGER, fecha_creacion datetime, id_creador integer, IP varchar(15))
+create function SignUp(correo varchar(255), nombre VARCHAR(255), pwd CHAR(32), IP varchar(20))
 returns integer
 begin
 
 insert into usuarios(usr_correo, usr_nombre, usr_pwd, usr_currency, usr_fecha_creacion, ses_id_creador)
-values (correo, nombre, md5(pwd), '5', now(), '1');
+values (correo, nombre, pwd, '5', now(), '1');
 
 set @Sid = LogIn(correo, pwd, IP);
  
@@ -340,18 +410,11 @@ END $
 -- __________________________________________________________________________________________________________________
 
 
-delimiter ;;
+delimiter ;
 
-create trigger ConfirmarRegistro
-before insert 
-on usuarios for each row
-begin
-	if (new.usr_correo in (usr_correo)) then 
-		set new.correo = null;
-	end if;
-end;;
+call Inicializar();
+select SignUp('restlessdisaster@gmail.com', 'TheRestless', md5('gangster12'), '127.0.0.1');
 
+select * from usuarios;
 
-
-
-
+select LogIn('master@mail.com', md5('qwert12345'), '127.0.0.1');
