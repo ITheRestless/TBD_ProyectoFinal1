@@ -7,6 +7,13 @@ package tbd_proyectofinal;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,12 +25,38 @@ public class CharPull extends javax.swing.JFrame {
     /**
      * Creates new form CharPull
      */
+    ResultSet rs;
+    Statement st;
+    conexionBD cn;
+    public class conexionBD{
+        Connection con;
+        public conexionBD(){
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/genealogia", "root", "");
+            }
+            catch(Exception e){}
+        }
+    }
+    
     public CharPull(int sesID) {
         initComponents();
         this.sesID = sesID;
-        
+        cn = new conexionBD();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        try {
+            String cueri = String.format("SELECT usr_currency FROM usuarios WHERE ses_id = %2d", sesID);
+            st = cn.con.createStatement();
+            rs = st.executeQuery(cueri);
+            if(rs.getInt("usr_currency") < 5)
+                jButton1.setEnabled(false);
+            else
+                jButton1.setEnabled(true);
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(CharPull.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -35,21 +68,55 @@ public class CharPull extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Invocar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 942, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(353, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 704, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
+                .addComponent(jButton1)
+                .addContainerGap(397, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            String cueri2 = String.format("SELECT mostrarInvocacion(%2d)", sesID);
+            ResultSet rs1 = st.executeQuery(cueri2);
+            String img = rs1.;
+        } 
+        catch (SQLException ex) {
+            Logger.getLogger(CharPull.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -87,5 +154,7 @@ public class CharPull extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
