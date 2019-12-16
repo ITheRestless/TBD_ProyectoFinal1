@@ -1,11 +1,12 @@
+drop database uwu;
 CREATE DATABASE uwu;
 USE uwu;
 
 CREATE TABLE usuarios(
     usr_id INT(11) AUTO_INCREMENT PRIMARY KEY,
-    usr_correo VARCHAR(255) NOT NULL UNIQUE,
+    usr_correo VARCHAR(255) NOT NULL,
     usr_nombre VARCHAR(255) NOT NULL,
-    usr_pwd CHAR(30) NOT NULL,
+    usr_pwd CHAR(32) NOT NULL,
     usr_currency INTEGER NOT NULL,
     usr_fecha_creacion DATETIME NOT NULL,
     ses_id_creador INTEGER NOT NULL
@@ -13,7 +14,7 @@ CREATE TABLE usuarios(
 
 CREATE TABLE sesiones(
     ses_id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    ses_ip VARCHAR(15) NOT NULL,
+    ses_ip VARCHAR(20) NOT NULL,
     ses_inicio DATETIME NOT NULL,
     ses_fin DATETIME NULL,
     ses_ult_act DATETIME NOT NULL,
@@ -44,6 +45,7 @@ CREATE TABLE permisos(
 CREATE TABLE inventario_uni(
     inv_un_ud INTEGER AUTO_INCREMENT PRIMARY KEY,
     inv_un_obtencion DATETIME NOT NULL,
+    inv_un_hp INTEGER NOT NULL,
     inv_un_nivel TINYINT NOT NULL,
     inv_un_exp TINYINT NOT NULL,
     inv_un_atk SMALLINT NOT NULL,
@@ -96,7 +98,7 @@ CREATE TABLE enemigos(
 
 ALTER TABLE usuarios
 ADD CONSTRAINT ses2usr 
-FOREIGN KEY (ses_id) REFERENCES sesiones(ses_id);
+FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
 
 ALTER TABLE roles_usuario
 ADD CONSTRAINT usr2rolusu
@@ -108,20 +110,19 @@ FOREIGN KEY (rol_id) REFERENCES roles(rol_id);
 
 ALTER TABLE roles_usuario
 ADD CONSTRAINT ses2rolusu
-FOREIGN KEY (ses_id) REFERENCES sesiones(ses_id);
+FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
 
 ALTER TABLE roles
 ADD CONSTRAINT ses2rol
-FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
 
 ALTER TABLE sesiones
 ADD CONSTRAINT usu2ses
-FOREIGN KEY (usr_id) REFERENCES
-usuarios(usr_id);
+FOREIGN KEY (usr_id) REFERENCES usuarios(usr_id);
 
 ALTER TABLE permisos
 ADD CONSTRAINT ses2perm
-FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
 
 ALTER TABLE permisos
 ADD CONSTRAINT rol2perm
@@ -130,7 +131,7 @@ roles (rol_id);
 
 ALTER TABLE inventario_uni
 ADD CONSTRAINT ses2invuni
-FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
+FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
 
 ALTER TABLE inventario_uni
 ADD CONSTRAINT unid2inveuni
@@ -172,47 +173,248 @@ ALTER TABLE enemigos
 ADD CONSTRAINT ses2ene
 FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
 
--- Inserciones
+-- ______________________________________________________________________________________________________________
 
-insert into usuarios(usr_correo, usr_nombre, usr_pwd, usr_currency, usr_fecha_creacion, ses_id_creador)
-values ('therestless@gmail.com', 'DonMau', md5('contraseñadelmau123'), '10', now(), 1);
 
--- Procedimientos y Funciones
+-- 											Procedimientos y Funciones
+
+-- ______________________________________________________________________________________________________________
 
 set global log_bin_trust_function_creators = 1;
+delimiter ;;
+
+create Procedure Inicializar()
+begin
+		ALTER TABLE usuarios
+		DROP foreign key ses2usr;
+
+		ALTER TABLE roles_usuario
+		DROP foreign key usr2rolusu;
+
+		ALTER TABLE roles_usuario
+		DROP foreign key rol2rolusu;
+
+		ALTER TABLE roles_usuario
+		DROP foreign key ses2rolusu;
+
+		ALTER TABLE roles
+		DROP foreign key ses2rol;
+
+		ALTER TABLE sesiones
+		DROP foreign key usu2ses;
+
+		ALTER TABLE permisos
+		DROP foreign key ses2perm;
+
+		ALTER TABLE permisos
+		DROP foreign key rol2perm;
+
+		insert into usuarios(usr_correo, usr_nombre, usr_pwd, usr_currency, usr_fecha_creacion, ses_id_creador)
+		values('master@mail.com', 'GameMaster', md5('qwert12345'), '5', now(), '1');
+
+		insert into sesiones(ses_ip, ses_inicio, ses_fin, ses_ult_act, usr_id)
+		values('127.0.0.1', now(), null, now(), '1');
+
+		insert into roles(rol_nombre, ses_id_creador)
+		values('super', '1');
+
+		insert into roles_usuario(ru_tiempo, usr_id, rol_id, ses_id_creador)
+		values(now(), '1', '1', '1');
+
+		insert into permisos(perm_permiso, perm_tiempo, ses_id_creador, rol_id)
+		values('FFFFFFF', now(), '1', '1');
+
+		ALTER TABLE usuarios
+		ADD CONSTRAINT ses2usr 
+		FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
+
+		ALTER TABLE roles_usuario
+		ADD CONSTRAINT usr2rolusu
+		FOREIGN KEY (usr_id) REFERENCES usuarios(usr_id);
+
+		ALTER TABLE roles_usuario
+		ADD CONSTRAINT rol2rolusu
+		FOREIGN KEY (rol_id) REFERENCES roles(rol_id);
+
+		ALTER TABLE roles_usuario
+		ADD CONSTRAINT ses2rolusu
+		FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
+
+		ALTER TABLE roles
+		ADD CONSTRAINT ses2rol
+		FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
+
+		ALTER TABLE sesiones
+		ADD CONSTRAINT usu2ses
+		FOREIGN KEY (usr_id) REFERENCES usuarios(usr_id);
+
+		ALTER TABLE permisos
+		ADD CONSTRAINT ses2perm
+		FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
+
+		ALTER TABLE permisos
+		ADD CONSTRAINT rol2perm
+		FOREIGN KEY (rol_id) REFERENCES
+		roles (rol_id);
+end;;
 
 delimiter ;;
 
 create procedure IniSes(id integer)
 begin
 update sesiones set ses_inicio = now() where (id = ses_id);
-end;
+end;;
+
+
+-- ______________________________________________________________________________________________________________
+
+delimiter ;;
+
+create procedure CerrSes(id integer)
+begin
+update sesiones set ses_fin = now() where (id = ses_id);
+end;;
+
+-- ______________________________________________________________________________________________________________
+
+delimiter ;;
 
 create procedure doAction(id integer)
 begin
 update sesiones set ses_ult_act = now() where (sesiones.usr_id = id);
-end;
+end;;
 
-create function LogIn(correo varchar(255), pass varchar(255), IP varchar(16))
-returns bool
+-- ______________________________________________________________________________________________________________
+
+set global log_bin_trust_function_creators = 1;
+delimiter ;;
+create function LogIn(correo varchar(255), pass char(32), IP varchar(20))
+returns integer
 begin
-if (correo in (usr_correo)) then 
-	if (pass = (select usr_pass from usuarios where (correo = usr_correo))) then 
-		set @conf = true;
+
+-- Se busca el id de usuario y el de la sesion
+select usr_id into @Uid from usuarios where (usr_correo = correo);
+select ses_id into @Sid from sesiones where (@Uid = usr_id) AND (IP = ses_ip);
+            
+-- si existe un usuario con ese correo
+if (correo in (select usr_correo from usuarios)) then
+
+	-- si la contraseña es correcta
+	if (pass = (select usr_pwd from usuarios where (correo = usr_correo))) then 
+        
+        -- si no hay una sesion con la ip actual, se añade una nueva
         if (IP not in (select ses_ip from sesiones where (sesiones.usr_id = (select usr_id from usuarios where (usr_correo = correo))))) then
-			select usr_id into @id from sesiones where (usr_correo = correo);
+            
+            -- insertar nueva sesion con la ip indicada
             insert into sesiones(ses_ip, ses_inicio, ses_fin, ses_ult_act, usr_id) values
-            (IP, now(), null, now(), @id);
-		else
-			select ses_id from sesiones where();
-			IniciSes(@Sid);
-            doAction(@Sid);
-		end if;
+            (IP, now(), null, now(), @Uid);
+		
+        else
+            -- Se actuaizan los datos de la sesion actual
+            call IniSes(@Sid);
+            call doAction(@Sid);
+        end if;
     else 
-		set @conf = false; 
+		set @Sid = -2; 
     end if;
 else 
-	set @conf = false;
+	set @Sid = -1;
 end if;
-return @conf;
+
+return @Sid;
 end;;
+
+
+-- ______________________________________________________________________________________________________________
+
+set global log_bin_trust_function_creators = 1;
+delimiter ;;
+create function SignUp(correo varchar(255), nombre VARCHAR(255), pwd CHAR(32), IP varchar(20))
+returns integer
+begin
+
+insert into usuarios(usr_correo, usr_nombre, usr_pwd, usr_currency, usr_fecha_creacion, ses_id_creador)
+values (correo, nombre, pwd, '5', now(), '1');
+
+set @Sid = LogIn(correo, pwd, IP);
+ 
+return @Sid;
+end;;
+
+
+-- ________________________________________________________________________________________________________
+
+
+DELIMITER $
+CREATE FUNCTION invocar(ses_id INT)
+RETURNS INT
+BEGIN
+	CALL utilizarFondos(ses_id);
+	SELECT COUNT(*) INTO @tam FROM unidades;
+    	SELECT FLOOR(1 + RAND()*(@tam - 1)) INTO @dato;
+    	SELECT un_atkinc INTO @atk FROM unidades WHERE (un_id = @dato);
+    	INSERT INTO inventario_uni (inv_un_obtencion, inv_un_nivel, inv_un_exp, inv_un_atk, ses_id, un_id) VALUES (NOW(), 1, 0, @atk, ses_id, @dato);
+    	RETURN @dato;
+END$
+
+
+-- ________________________________________________________________________________________________________
+
+
+DELIMITER $
+CREATE FUNCTION mostrarInvocacion(ses_id INT)
+RETURNS VARCHAR(255)
+BEGIN
+	SET @dato = invocar(ses_id);
+    SET @dirImg = (SELECT un_img FROM unidades WHERE un_img = @dato);
+    RETURN @dirImg;
+END $
+
+-- _________________________________________________________________________________________________________
+
+
+-- Habilita el botón de invocar
+CREATE FUNCTION verificarFondos(id INT)
+RETURNS BOOLEAN
+BEGIN
+	SELECT usuarios.usr_currency INTO @fondos FROM usuarios WHERE (ses_id = id);
+	IF(@fondos > 5) THEN
+    	return TRUE;
+    ELSE
+    	return FALSE;
+    END IF;
+END$
+
+
+-- _________________________________________________________________________________________________________
+
+
+DELIMITER $
+CREATE PROCEDURE utilizarFondos (IN ses_id INT)
+BEGIN
+	UPDATE usuarios
+    SET usuarios.usr_currency = usr_currency - 5;
+END$
+
+-- _________________________________________________________________________________________________________
+
+
+-- FUNCIONES Y MÉTODOS DEL INVENTARIO!!!!
+DELIMITER $
+CREATE PROCEDURE inventarioGenerico (IN ses_id INT)
+BEGIN
+	SELECT un.un_img FROM unidades AS un INNER JOIN inventario_uni AS iu ON(un.un_id = iu.un_id)
+    WHERE inventario_uni.ses_id = ses_id;
+END $
+
+-- __________________________________________________________________________________________________________________
+
+
+delimiter ;
+
+call Inicializar();
+select SignUp('restlessdisaster@gmail.com', 'TheRestless', md5('gangster12'), '127.0.0.1');
+
+select * from usuarios;
+
+select LogIn('master@mail.com', md5('qwert12345'), '127.0.0.1');
