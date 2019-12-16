@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class Conexion {
     
     //Atributo
-    private Connection conexion = null;
+    public Connection conexion = null;
    
     //Métodos
     public Connection conectar(){         

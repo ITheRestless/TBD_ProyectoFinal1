@@ -33,36 +33,18 @@ public class Inventario extends javax.swing.JFrame {
     public ResultSet rs = null;
     public ResultSet rs1 = null;
     public int ses_id;
-    public conexionBD cn;
+    public Conexion cn;
     public int cont;
     public BufferedImage img = null;
     public Image dimg = null;
-    
-    public class conexionBD{
-        Connection con;
-        public conexionBD(){
-            try{
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/genealogia", "root", "");
-            }
-            catch(Exception e){}
-        }
-    }
     
     public Inventario() {
         initComponents();
         //cn = new conexionBD();
         Personaje pers = new Personaje();
-        Personaje pers1 = new Personaje();
-        Personaje pers2 = new Personaje();
-        pers.setImg("personajes\\imagenes\\juri_img.png");
-        pers1.setImg("personajes\\imagenes\\seruel_img.png");
-        pers2.setImg("personajes\\imagenes\\rackam_img.png");
         personajes = new ArrayList();
-        personajes.add(pers);
-        personajes.add(pers1);
-        personajes.add(pers2);
         cont = 0;
+        invent();
         mostrarInfo();
     }
     
@@ -86,7 +68,7 @@ public class Inventario extends javax.swing.JFrame {
     public void invent(){
         try{
             Personaje pers = new Personaje();
-            st = cn.con.createStatement();
+            st = cn.conexion.createStatement();
             rs = st.executeQuery(null);
             rs1 = st.executeQuery(null);
             if(rs.next()){
@@ -149,7 +131,7 @@ public class Inventario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 596, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -162,11 +144,11 @@ public class Inventario extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton1))
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,8 +173,8 @@ public class Inventario extends javax.swing.JFrame {
                             .addComponent(jLabel9))
                         .addGap(18, 18, 18)
                         .addComponent(jButton1))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 751, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
