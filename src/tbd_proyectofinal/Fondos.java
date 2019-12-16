@@ -21,7 +21,7 @@ public class Fondos extends javax.swing.JFrame {
     public Fondos(int sesID) {
         initComponents();
         this.sesID = sesID;
-        
+        Conexion sql = new Conexion();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
@@ -42,26 +42,51 @@ public class Fondos extends javax.swing.JFrame {
         rB15 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        labelMensaje = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("FONDOS");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 80, -1));
 
+        rB5.setBackground(new java.awt.Color(0, 0, 0));
         buttonGroup1.add(rB5);
         rB5.setFont(new java.awt.Font("Bahnschrift", 0, 11)); // NOI18N
+        rB5.setForeground(new java.awt.Color(255, 255, 255));
         rB5.setText("5 Fondos");
+        getContentPane().add(rB5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 80, -1));
 
+        rB10.setBackground(new java.awt.Color(0, 0, 0));
         buttonGroup1.add(rB10);
         rB10.setFont(new java.awt.Font("Bahnschrift", 0, 11)); // NOI18N
+        rB10.setForeground(new java.awt.Color(255, 255, 255));
         rB10.setText("10 Fondos");
+        getContentPane().add(rB10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 80, -1));
 
+        rB15.setBackground(new java.awt.Color(0, 0, 0));
         buttonGroup1.add(rB15);
         rB15.setFont(new java.awt.Font("Bahnschrift", 0, 11)); // NOI18N
+        rB15.setForeground(new java.awt.Color(255, 255, 255));
         rB15.setText("15 Fondos");
+        rB15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rB15ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(rB15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 80, -1));
 
         jButton1.setFont(new java.awt.Font("Bahnschrift", 0, 11)); // NOI18N
         jButton1.setText("Añadir fondo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 100, -1));
 
         jButton2.setFont(new java.awt.Font("Bahnschrift", 0, 11)); // NOI18N
         jButton2.setText("Regresar a menu");
@@ -70,47 +95,14 @@ public class Fondos extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 120, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rB5)
-                            .addComponent(rB10)
-                            .addComponent(rB15))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(76, 76, 76))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(205, 205, 205)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addComponent(rB5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(33, 33, 33)
-                .addComponent(rB10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(33, 33, 33)
-                .addComponent(rB15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(35, 35, 35))
-        );
+        labelMensaje.setBackground(new java.awt.Color(0, 0, 0));
+        labelMensaje.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(labelMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 190, 23));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/8-bit-wallpaper.jpg"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -119,6 +111,25 @@ public class Fondos extends javax.swing.JFrame {
         new Menu(sesID).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(rB5.isSelected()){
+            Conexion sql = new Conexion();
+            
+            //sql.consultaUnitaria("CALL PROCEDURE actualizarFondos('5', " + sesID + ");"));
+            //labelMensaje.setText("5 fondos añididos :D");
+        }
+        else if(rB10.isSelected()){
+            labelMensaje.setText("10 fondos añididos :D");
+        }
+        else{
+            labelMensaje.setText("15 fondos añididos :D");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void rB15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rB15ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rB15ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,6 +171,8 @@ public class Fondos extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel labelMensaje;
     private javax.swing.JRadioButton rB10;
     private javax.swing.JRadioButton rB15;
     private javax.swing.JRadioButton rB5;

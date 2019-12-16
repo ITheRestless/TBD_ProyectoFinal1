@@ -31,7 +31,7 @@ public class Conexion {
     public Connection conectar(){         
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","RPG_User","");
+            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","root","");
         } catch (ClassNotFoundException | SQLException ex) {    
             System.out.println("Error al conectar: " + ex);
         }
@@ -85,6 +85,8 @@ public class Conexion {
         return numero;
     }
     
+
+    
     public int LogIn(String correo, String pass) {
         String ip = "";
         try {
@@ -123,6 +125,27 @@ public class Conexion {
         
  
         return numero;
+    }
+    
+    public void update(String consulta) {
+        
+        try{
+            conectar();
+            
+            Statement st;
+            st = (Statement) conexion.createStatement();
+            ResultSet rs = st.executeQuery(consulta);
+           
+            rs.next();
+            
+            
+            st.close();
+            rs.close();
+            desconectar();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public String consultaUnitaria(String consulta) {
