@@ -5,9 +5,17 @@
  */
 package tbd_proyectofinal;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,6 +27,13 @@ public class Inventario extends javax.swing.JFrame {
      * Creates new form Inventario
      */
     public ArrayList <Personaje> personajes;
+    public Statement st = null;
+    public ResultSet rs = null;
+    public ResultSet rs1 = null;
+    public int ses_id;
+    public conexionBD cn;
+    public int cont;
+    
     
     public class conexionBD{
         Connection con;
@@ -33,11 +48,34 @@ public class Inventario extends javax.swing.JFrame {
     
     public Inventario() {
         initComponents();
-        conexionBD cn = new conexionBD();
+        //cn = new conexionBD();
+        Personaje pers = new Personaje();
+        pers.setImg("C:\\Users\\52871\\Documents\\GitHub\\personajes\\imagenes.juri_img.png");
         personajes = new ArrayList();
+        personajes.add(pers);
+        cont = 0;
+        try {
+            //invent();
+            jLabel1.setIcon(new ImageIcon(ImageIO.read(new File("personajes\\imagenes\\juri_img.png"))));
+      
+        } catch (IOException ex) {
+            Logger.getLogger(Inventario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
-    //public void();
+    public void invent(){
+        try{
+            Personaje pers = new Personaje();
+            st = cn.con.createStatement();
+            rs = st.executeQuery(null);
+            rs1 = st.executeQuery(null);
+            if(rs.next()){
+            }
+        }
+        catch(Exception e){
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,17 +86,27 @@ public class Inventario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 581, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(339, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         pack();
@@ -100,5 +148,6 @@ public class Inventario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
