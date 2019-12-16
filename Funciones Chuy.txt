@@ -6,7 +6,7 @@ BEGIN
 SELECT COUNT(*) INTO @tam FROM  unidades WHERE  (id = ses_id);
 SELECT un_img INTO @imagen
 FROM unidades
-WHERE (ses_id = id) AND (un_id = FLOOR(1 + RAND() * (tam - 1)));
+WHERE ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id) AND (un_id = FLOOR(1 + RAND() * (tam - 1)));
 RETURN @imagen;
 END $$
 DELIMITER ;
@@ -15,17 +15,17 @@ DELIMITER $$
 CREATE FUNCTION fFondos(ses_id_abierta INT)
 RETURNS INT
 BEGIN
-SELECT usr_currency INTO fondo @ FROM usuarios WHERE (ses_id_abierta = ses_id );
+select usr_currency AS @fondos from usuarios where ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
 RETURN @fondo;
 END $$
 DELIMITER ;
 
 DELIMITER $$
 CREATE FUNCTION fNombre(ses_id_abierta INT)
-RETURNS VARCHAR
+RETURNS VARCHAR (255)
 BEGIN
-SELECT usr_nombre INTO @nombre FROM usuarios WHERE (ses_id_abierta = ses_id);
-RETURN nombre;
+select usr_nombre INTO @nombre from usuarios where ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
+RETURN @nombre;
 END $$
 DELIMITER ;
 
@@ -33,11 +33,10 @@ CREATE VIEW personasSugeridad AS
 SELECT usr_nombre, usr_fecha_creacion FROM usuarios ORDER BY usr_nombre LIMIT 3;
 
 DELIMITER $$
-CRATE PROCEDURE actualizarFondos(IN compra INT, IN ses_id_abierta INT)
-BEGIN
+CREATE PROCEDURE actualizarFondos(IN compra INT, IN ses_id_abierta INT)
 BEGIN 
 UPDATE usuarios SET usr_currency = usr_currency + compra
-WHERE (usuarios.ses_id = ses_id_abierta);
+WHERE ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
 END $$
 DELIMITER ;
 
