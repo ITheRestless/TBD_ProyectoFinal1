@@ -109,9 +109,9 @@ public class CharPull extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            String cueri2 = String.format("SELECT mostrarInvocacion(%2d)", sesID);
+            String cueri2 = String.format("SELECT mostrarInvocacion(%2d) AS inv", sesID);
             ResultSet rs1 = st.executeQuery(cueri2);
-            String img = rs1.;
+            String img = rs1.getString("inv");
         } 
         catch (SQLException ex) {
             Logger.getLogger(CharPull.class.getName()).log(Level.SEVERE, null, ex);
