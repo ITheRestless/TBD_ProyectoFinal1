@@ -11,17 +11,21 @@ package tbd_proyectofinal;
  */
 public class Personaje {
     private int id;
+    private int inv_un_id;
     private String nombre;
     private int hp;
     private int atk;
     private String rareza;
+    private int nivel;
     //private String imagen;
     private String img;
     private String sprite;
     private String icono;
     
-    public Personaje(int id, String nom, int hp, String rareza, String img, String sprite, String icono, int atk){
+    public Personaje(int nivel, int inv_un_id, int id, String nom, int hp, String rareza, String img, String sprite, String icono, int atk){
         this.id = id;
+        this.nivel = nivel;
+        this.inv_un_id = inv_un_id;
         this.nombre = nom;
         this.hp = hp;
         this.rareza = rareza;
@@ -102,4 +106,22 @@ public class Personaje {
     public void setAtk(int atk) {
         this.atk = atk;
     }
+
+    public int getInv_un_id() {
+        return inv_un_id;
+    }
+
+    public void setInv_un_id(int inv_un_id) {
+        this.inv_un_id = inv_un_id;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+    
+    
 }
