@@ -6,7 +6,11 @@
 package tbd_proyectofinal;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,6 +18,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -27,27 +33,19 @@ public class CharPull extends javax.swing.JFrame {
      */
     ResultSet rs;
     Statement st;
-    conexionBD cn;
-    public class conexionBD{
-        Connection con;
-        public conexionBD(){
-            try{
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/genealogia", "root", "");
-            }
-            catch(Exception e){}
-        }
-    }
+    Conexion cn;
     
     public CharPull(int sesID) {
         initComponents();
         this.sesID = sesID;
-        cn = new conexionBD();
+        cn = new Conexion();
+        
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        
         try {
-            String cueri = String.format("SELECT usr_currency FROM usuarios WHERE ses_id = %2d", sesID);
-            st = cn.con.createStatement();
+            String cueri = String.format("SELECT usr_currency FROM usuarios WHERE usuarios.ses_id = %2d", sesID);
+            st = cn.conexion.createStatement();
             rs = st.executeQuery(cueri);
             if(rs.getInt("usr_currency") < 5)
                 jButton1.setEnabled(false);
@@ -112,8 +110,14 @@ public class CharPull extends javax.swing.JFrame {
             String cueri2 = String.format("SELECT mostrarInvocacion(%2d) AS inv", sesID);
             ResultSet rs1 = st.executeQuery(cueri2);
             String img = rs1.getString("inv");
+            
+            BufferedImage imag = ImageIO.read(new File(img));
+            Image dimg = imag.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+            jLabel1.setIcon(new ImageIcon(dimg));
         } 
         catch (SQLException ex) {
+            Logger.getLogger(CharPull.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(CharPull.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed

@@ -33,36 +33,18 @@ public class Inventario extends javax.swing.JFrame {
     public ResultSet rs = null;
     public ResultSet rs1 = null;
     public int ses_id;
-    public conexionBD cn;
+    public Conexion cn;
     public int cont;
     public BufferedImage img = null;
     public Image dimg = null;
-    
-    public class conexionBD{
-        Connection con;
-        public conexionBD(){
-            try{
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/genealogia", "root", "");
-            }
-            catch(Exception e){}
-        }
-    }
     
     public Inventario() {
         initComponents();
         //cn = new conexionBD();
         Personaje pers = new Personaje();
-        Personaje pers1 = new Personaje();
-        Personaje pers2 = new Personaje();
-        pers.setImg("personajes\\imagenes\\juri_img.png");
-        pers1.setImg("personajes\\imagenes\\seruel_img.png");
-        pers2.setImg("personajes\\imagenes\\rackam_img.png");
         personajes = new ArrayList();
-        personajes.add(pers);
-        personajes.add(pers1);
-        personajes.add(pers2);
         cont = 0;
+        invent();
         mostrarInfo();
     }
     
@@ -86,7 +68,7 @@ public class Inventario extends javax.swing.JFrame {
     public void invent(){
         try{
             Personaje pers = new Personaje();
-            st = cn.con.createStatement();
+            st = cn.conexion.createStatement();
             rs = st.executeQuery(null);
             rs1 = st.executeQuery(null);
             if(rs.next()){
