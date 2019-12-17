@@ -34,6 +34,7 @@ public class Menu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         labelFondos = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -117,7 +118,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(200, 410, 270, 30);
+        jButton1.setBounds(200, 410, 140, 30);
 
         labelFondos.setFont(new java.awt.Font("Bahnschrift", 1, 36)); // NOI18N
         labelFondos.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,6 +130,16 @@ public class Menu extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Gifs/miniCrystal.gif"))); // NOI18N
         getContentPane().add(jLabel3);
         jLabel3.setBounds(20, 20, 50, 100);
+
+        jButton2.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
+        jButton2.setText("Consola");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(350, 410, 120, 30);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Gifs/MenuBack2.gif"))); // NOI18N
@@ -156,6 +167,11 @@ public class Menu extends javax.swing.JFrame {
         new OtrosUsuarios(sesID).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new Consultar(sesID).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,6 +216,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel LabUsrName;
     private javax.swing.JLabel UltimaUnidad;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel labelFondos;

@@ -1,6 +1,8 @@
 package tbd_proyectofinal;
 
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +24,9 @@ public class PoolUnidades extends javax.swing.JFrame {
         
         this.sesID = sesID;
         
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+
         Conexion sql = new Conexion();
         pers = sql.consultaPersnajes("select * from unidades");
         MostrarPagina();

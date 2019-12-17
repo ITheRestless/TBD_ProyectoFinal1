@@ -29,11 +29,11 @@ public class Login extends javax.swing.JFrame {
         Correo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        Contraseña = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        Contraseña = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -67,8 +67,6 @@ public class Login extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         getContentPane().add(jLabel6);
         jLabel6.setBounds(190, 210, 150, 20);
-        getContentPane().add(Contraseña);
-        Contraseña.setBounds(20, 180, 320, 30);
 
         jLabel7.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -104,6 +102,8 @@ public class Login extends javax.swing.JFrame {
         });
         getContentPane().add(jButton2);
         jButton2.setBounds(30, 270, 120, 40);
+        getContentPane().add(Contraseña);
+        Contraseña.setBounds(20, 180, 320, 30);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Fondos/Login.gif"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -163,7 +163,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Contraseña;
+    private javax.swing.JPasswordField Contraseña;
     private javax.swing.JTextField Correo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

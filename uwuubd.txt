@@ -223,6 +223,9 @@ begin
 
 		insert into roles(rol_nombre, ses_id_creador)
 		values('super', '1');
+        
+        insert into roles(rol_nombre, ses_id_creador)
+		values('user', '1');
 
 		insert into roles_usuario(ru_tiempo, usr_id, rol_id, ses_id_creador)
 		values(now(), '1', '1', '1');
@@ -230,6 +233,9 @@ begin
 		insert into permisos(perm_permiso, perm_tiempo, ses_id_creador, rol_id)
 		values('FFFFFFF', now(), '1', '1');
 
+		insert into permisos(perm_permiso, perm_tiempo, ses_id_creador, rol_id)
+		values('0FFFFFF', now(), '1', '2');
+        
 		ALTER TABLE usuarios
 		ADD CONSTRAINT ses2usr 
 		FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
@@ -468,6 +474,30 @@ SELECT usr_nombre AS 'Usuario', usr_fecha_creacion AS 'Inicio' FROM usuarios ORD
 -- __________________________________________________________________________________________________________________
 
 
+delimiter ;;
+
+create trigger VerificarFondos
+before update 
+on usuarios for each row
+begin
+	if (new.usr_currency > 100) then
+			set new.usr_currency = 100;
+	end if;
+end;;
+
+-- __________________________________________________________________________________________________________________
+
+
+delimiter ;;
+create trigger SesionAbierta
+before update 
+on sesiones for each row
+begin
+	if (old.ses_fin = null) then
+			set new.ses_fin = now();
+	end if;
+end;;
+
 
 DELIMITER $$
 CREATE PROCEDURE actualizarFondos(IN compra INT, IN ses_id_abierta INT)
@@ -476,6 +506,19 @@ UPDATE usuarios SET usr_currency = usr_currency + compra
 WHERE ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
 END $$
 DELIMITER ;
+
+
+-- __________________________________________________________________________________________________________________
+
+
+delimiter ;;
+
+create trigger registraRoles
+after insert
+on usuarios for each row
+insert into roles_usuario(ru_tiempo, usr_id, rol_id, ses_id_creador)
+values(now(), new.usr_id, '2', '1');
+end;;
 
 
 -- __________________________________________________________________________________________________________________

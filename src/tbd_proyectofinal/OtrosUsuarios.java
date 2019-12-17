@@ -5,8 +5,6 @@
  */
 package tbd_proyectofinal;
 
-import java.util.Random;
-
 /**
  *
  * @author Jesus
@@ -21,17 +19,7 @@ int sesID;
         initComponents();
         this.sesID = sesID;
         Conexion sql = new Conexion();
-<<<<<<< HEAD
         sql.consulta(tabla, "select Usuario, Inicio from seleccionarUsuarios");
-=======
-        
-        for(int i=0; i<3; i++){
-            Random azar = new Random();
-            int id = 1+azar.nextInt( (5+1) - 1);
-        tabla.setValueAt(sql.consultaUnitaria("select usr_nombre from usuarios where (" +id+ " = usr_id);"),i,0);
-        tabla.setValueAt(sql.consultaUnitaria("select usr_fecha_creacion from usuarios where (" +id+ " = usr_id);"),i,1);
-        }
->>>>>>> fa8536d19c2b3ce2576434eebc6f08368788fdae
     }
 
     /**
