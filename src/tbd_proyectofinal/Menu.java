@@ -173,7 +173,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtUnidadesActionPerformed
 
     private void ButtInvocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtInvocarActionPerformed
-        // TODO add your handling code here:
+        new Invocar(sesID).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_ButtInvocarActionPerformed
 
     private void ButtFondosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtFondosActionPerformed

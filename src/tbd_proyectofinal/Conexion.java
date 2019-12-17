@@ -32,7 +32,7 @@ public class Conexion {
     public void conectar(){   //previamente retornaba un objeto de tipo Connection      
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","root","");
+            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","root","2109");
         } catch (ClassNotFoundException | SQLException ex) {    
             System.out.println("Error al conectar: " + ex);
         }
@@ -261,7 +261,7 @@ sp.execute();
             
             while(rs.next()){
                 tabla.add(new Personaje(rs.getInt("un_id"), rs.getString("un_nombre"), rs.getInt("un_hp"), rs.getString("un_rareza"), 
-                        rs.getInt("un_atk"), rs.getString("un_img"), rs.getString("un_sprite"), rs.getString("un_icono"), rs.getInt("ses_id")));
+                        rs.getInt("un_atkinc"), rs.getString("un_img"), rs.getString("un_sprite"), rs.getString("un_icono"), rs.getInt("ses_id")));
             }
             
             desconectar();
