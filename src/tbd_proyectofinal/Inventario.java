@@ -68,7 +68,7 @@ public class Inventario extends javax.swing.JFrame {
     public void invent(){
         try{
             Personaje pers = new Personaje();
-            st = cn.conexion.createStatement();
+            //st = cn.conexion.createStatement();
             rs = st.executeQuery(null);
             rs1 = st.executeQuery(null);
             if(rs.next()){
