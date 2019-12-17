@@ -26,17 +26,17 @@ import javax.swing.table.DefaultTableModel;
 public class Conexion {
     
     //Atributo
-    private Connection conexion = null;
+    public Connection conexion = null;
    
     //Métodos
-    public Connection conectar(){         
+    public void conectar(){   //previamente retornaba un objeto de tipo Connection      
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","RPG_User","");
+            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","root","");
         } catch (ClassNotFoundException | SQLException ex) {    
             System.out.println("Error al conectar: " + ex);
         }
-        return conexion;
+        //return conexion;
     }
 
     public void desconectar() {
