@@ -26,17 +26,17 @@ import javax.swing.table.DefaultTableModel;
 public class Conexion {
     
     //Atributo
-    private Connection conexion = null;
+    public Connection conexion = null;
    
     //Métodos
-    public Connection conectar(){         
+    public void conectar(){   //previamente retornaba un objeto de tipo Connection      
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","root","");
         } catch (ClassNotFoundException | SQLException ex) {    
             System.out.println("Error al conectar: " + ex);
         }
-        return conexion;
+        //return conexion;
     }
 
     public void desconectar() {
@@ -260,8 +260,8 @@ sp.execute();
             ResultSet rs = st.executeQuery(consulta);
             
             while(rs.next()){
-                tabla.add(new Personaje(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), 
-                        rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9)));
+                tabla.add(new Personaje(rs.getInt("un_id"), rs.getString("un_nombre"), rs.getInt("un_hp"), rs.getString("un_rareza"), 
+                        rs.getInt("un_atk"), rs.getString("un_img"), rs.getString("un_sprite"), rs.getString("un_icono"), rs.getInt("ses_id")));
             }
             
             desconectar();

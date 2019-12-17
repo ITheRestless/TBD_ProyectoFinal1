@@ -28,19 +28,20 @@ public class PoolUnidades extends javax.swing.JFrame {
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
         Conexion sql = new Conexion();
-        pers = sql.consultaPersnajes("select * from unidades");
+        //pers = sql.consultaPersnajes("select * from unidades");
+        pers = sql.consultaPersnajes("SELECT un_id, un_nombre, un_hp, un_rareza, un_atk, un_img, un_sprite, un_icono, ses_id FROM unidades");
         MostrarPagina();
     }
     
     public void MostrarPagina() {
         try {
-            BufferedImage img = ImageIO.read(new File(pers.get((pag*4)).un_sprite));
+            BufferedImage img = ImageIO.read(new File(pers.get((pag*4)).sprite));
             Image dimg  = img.getScaledInstance(sp1.getWidth(), sp1.getHeight(), Image.SCALE_SMOOTH);
             sp1.setIcon(new ImageIcon(dimg));
-            name1.setText(pers.get((pag*4)).un_nombre);
-            atk1.setText(pers.get((pag*4) + 1).un_atkinc + "");
-            hp1.setText(pers.get((pag*4) + 1).un_hp + "");
-            rare1.setText(pers.get((pag*4) + 1).un_rareza);
+            name1.setText(pers.get((pag*4)).nombre);
+            atk1.setText(pers.get((pag*4) + 1).atk + "");
+            hp1.setText(pers.get((pag*4) + 1).hp + "");
+            rare1.setText(pers.get((pag*4) + 1).rareza);
         } catch (IOException ex) {
             sp1.setIcon(null);
             name1.setText("");
@@ -49,13 +50,13 @@ public class PoolUnidades extends javax.swing.JFrame {
             rare1.setText("");
         }
         try {
-            BufferedImage img = ImageIO.read(new File(pers.get((pag*4) + 1).un_sprite));
+            BufferedImage img = ImageIO.read(new File(pers.get((pag*4) + 1).sprite));
             Image dimg  = img.getScaledInstance(sp2.getWidth(), sp2.getHeight(), Image.SCALE_SMOOTH);
             sp2.setIcon(new ImageIcon(dimg));
-            name2.setText(pers.get((pag*4) + 2).un_nombre);
-            atk2.setText(pers.get((pag*4) + 2).un_atkinc + "");
-            hp2.setText(pers.get((pag*4) + 2).un_hp + "");
-            rare2.setText(pers.get((pag*4) + 2).un_rareza);
+            name2.setText(pers.get((pag*4) + 2).nombre);
+            atk2.setText(pers.get((pag*4) + 2).atk + "");
+            hp2.setText(pers.get((pag*4) + 2).hp + "");
+            rare2.setText(pers.get((pag*4) + 2).rareza);
         } catch (IOException ex) {
             sp2.setIcon(null);
             name2.setText("");
@@ -64,13 +65,13 @@ public class PoolUnidades extends javax.swing.JFrame {
             rare2.setText("");
         }
         try {    
-            BufferedImage img = ImageIO.read(new File(pers.get((pag*4) + 2).un_sprite));
+            BufferedImage img = ImageIO.read(new File(pers.get((pag*4) + 2).sprite));
             Image dimg  = img.getScaledInstance(sp3.getWidth(), sp3.getHeight(), Image.SCALE_SMOOTH);
             sp3.setIcon(new ImageIcon(dimg));
-            name3.setText(pers.get((pag*4) + 2).un_nombre);
-            atk3.setText(pers.get((pag*4) + 2).un_atkinc + "");
-            hp3.setText(pers.get((pag*4) + 2).un_hp + "");
-            rare3.setText(pers.get((pag*4) + 2).un_rareza);
+            name3.setText(pers.get((pag*4) + 2).nombre);
+            atk3.setText(pers.get((pag*4) + 2).atk + "");
+            hp3.setText(pers.get((pag*4) + 2).hp + "");
+            rare3.setText(pers.get((pag*4) + 2).rareza);
         } catch (IOException ex) {
             sp3.setIcon(null);
             name3.setText("");
@@ -79,13 +80,13 @@ public class PoolUnidades extends javax.swing.JFrame {
             rare3.setText("");
         }
         try {
-            BufferedImage img = ImageIO.read(new File(pers.get((pag*4) + 3).un_sprite));
+            BufferedImage img = ImageIO.read(new File(pers.get((pag*4) + 3).sprite));
             Image dimg  = img.getScaledInstance(sp4.getWidth(), sp4.getHeight(), Image.SCALE_SMOOTH);
             sp4.setIcon(new ImageIcon(dimg));
-            name4.setText(pers.get((pag*4) + 3).un_nombre);
-            atk4.setText(pers.get((pag*4) + 3).un_atkinc + "");
-            hp4.setText(pers.get((pag*4) + 3).un_hp + "");
-            rare4.setText(pers.get((pag*4) + 3).un_rareza);
+            name4.setText(pers.get((pag*4) + 3).nombre);
+            atk4.setText(pers.get((pag*4) + 3).atk + "");
+            hp4.setText(pers.get((pag*4) + 3).hp + "");
+            rare4.setText(pers.get((pag*4) + 3).rareza);
         } catch (IOException ex) {
             sp4.setIcon(null);
             name4.setText("");
@@ -148,12 +149,12 @@ public class PoolUnidades extends javax.swing.JFrame {
         atk1.setForeground(new java.awt.Color(255, 255, 255));
         atk1.setText("atk");
         getContentPane().add(atk1);
-        atk1.setBounds(260, 50, 80, 14);
+        atk1.setBounds(260, 50, 80, 16);
 
         hp1.setForeground(new java.awt.Color(255, 255, 255));
         hp1.setText("hp");
         getContentPane().add(hp1);
-        hp1.setBounds(260, 70, 80, 14);
+        hp1.setBounds(260, 70, 80, 16);
 
         rare1.setForeground(new java.awt.Color(255, 255, 255));
         rare1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -180,12 +181,12 @@ public class PoolUnidades extends javax.swing.JFrame {
         atk2.setForeground(new java.awt.Color(255, 255, 255));
         atk2.setText("atk");
         getContentPane().add(atk2);
-        atk2.setBounds(590, 50, 90, 14);
+        atk2.setBounds(590, 50, 90, 16);
 
         hp2.setForeground(new java.awt.Color(255, 255, 255));
         hp2.setText("hp");
         getContentPane().add(hp2);
-        hp2.setBounds(590, 70, 90, 14);
+        hp2.setBounds(590, 70, 90, 16);
 
         rare2.setForeground(new java.awt.Color(255, 255, 255));
         rare2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -212,12 +213,12 @@ public class PoolUnidades extends javax.swing.JFrame {
         atk3.setForeground(new java.awt.Color(255, 255, 255));
         atk3.setText("atk");
         getContentPane().add(atk3);
-        atk3.setBounds(260, 210, 80, 14);
+        atk3.setBounds(260, 210, 80, 16);
 
         hp3.setForeground(new java.awt.Color(255, 255, 255));
         hp3.setText("hp");
         getContentPane().add(hp3);
-        hp3.setBounds(260, 230, 80, 14);
+        hp3.setBounds(260, 230, 80, 16);
 
         rare3.setForeground(new java.awt.Color(255, 255, 255));
         rare3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -244,12 +245,12 @@ public class PoolUnidades extends javax.swing.JFrame {
         atk4.setForeground(new java.awt.Color(255, 255, 255));
         atk4.setText("atk");
         getContentPane().add(atk4);
-        atk4.setBounds(590, 210, 90, 14);
+        atk4.setBounds(590, 210, 90, 16);
 
         hp4.setForeground(new java.awt.Color(255, 255, 255));
         hp4.setText("hp");
         getContentPane().add(hp4);
-        hp4.setBounds(590, 230, 90, 14);
+        hp4.setBounds(590, 230, 90, 16);
 
         rare4.setForeground(new java.awt.Color(255, 255, 255));
         rare4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -294,7 +295,7 @@ public class PoolUnidades extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(100, 350, 710, 23);
+        jButton2.setBounds(100, 350, 710, 25);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
