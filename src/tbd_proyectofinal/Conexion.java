@@ -32,7 +32,7 @@ public class Conexion {
     public Connection conectar(){         
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","RPG_User","");
+            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","root","");
         } catch (ClassNotFoundException | SQLException ex) {    
             System.out.println("Error al conectar: " + ex);
         }
@@ -169,7 +169,12 @@ public class Conexion {
       System.err.println(e.getMessage());
     }
   }
-
+    public void Llamar(String llamada) throws SQLException{
+        conectar();
+        String llam = llamada;
+    CallableStatement call = conexion.prepareCall(llamada);
+        call.execute();
+    }
     
     /*public void Llamada(String consulta, int id, int c) throws SQLException {
         
