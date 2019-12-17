@@ -10,17 +10,33 @@ public class Personaje {
     int nivel;
     String nombre;
     String img;
+    String sprite;
     String rareza;
+    String icono;
     //int un_atkinc;
-    //int ses_id;
+    int ses_id;
     
-    public Personaje(int id, int atk, int hp, int nivel, String nombre, String img, String rareza){
+    public Personaje(int id, String nombre, int hp, String rareza, int atk, String img, String sprite, String icono, int ses_id){
+        this.id = id;
+        this.nombre = nombre;
+        this.hp = hp;
+        this.rareza = rareza;
+        this.atk = atk;
+        this.img = img;
+        this.sprite = sprite;
+        this.icono = icono;
+        this.ses_id = ses_id;
+    }
+    
+    public Personaje(int id, int atk, int hp, int nivel, String nombre, String img, String sprite, String icono, String rareza){
         this.id = id;
         this.atk = atk;
         this.hp = hp;
         this.nivel = nivel;
         this.nombre = nombre;
         this.img = img;
+        this.sprite = sprite;
+        this.icono = icono;
         this.rareza = rareza;
     }
     
@@ -89,6 +105,31 @@ public class Personaje {
     public void setRareza(String rareza) {
         this.rareza = rareza;
     }
+
+    public String getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(String sprite) {
+        this.sprite = sprite;
+    }
+
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
+    }
+
+    public int getSes_id() {
+        return ses_id;
+    }
+
+    public void setSes_id(int ses_id) {
+        this.ses_id = ses_id;
+    }
+    
     
     
 }
