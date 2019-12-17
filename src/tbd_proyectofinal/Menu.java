@@ -110,14 +110,14 @@ public class Menu extends javax.swing.JFrame {
         ButtUnidades.setBounds(10, 140, 184, 140);
 
         jButton1.setFont(new java.awt.Font("Bahnschrift", 0, 18)); // NOI18N
-        jButton1.setText("Mas gente");
+        jButton1.setText("Usuarios");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(270, 410, 140, 20);
+        jButton1.setBounds(200, 410, 270, 30);
 
         labelFondos.setFont(new java.awt.Font("Bahnschrift", 1, 36)); // NOI18N
         labelFondos.setForeground(new java.awt.Color(255, 255, 255));
