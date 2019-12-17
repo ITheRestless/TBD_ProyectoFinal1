@@ -169,7 +169,12 @@ public class Conexion {
       System.err.println(e.getMessage());
     }
   }
-
+    public void Llamar(String llamada) throws SQLException{
+        conectar();
+        String llam = llamada;
+    CallableStatement call = conexion.prepareCall(llamada);
+        call.execute();
+    }
     
     /*public void Llamada(String consulta, int id, int c) throws SQLException {
         

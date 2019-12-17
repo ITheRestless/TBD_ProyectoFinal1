@@ -31,7 +31,7 @@ public class Fondos extends javax.swing.JFrame {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         nombre.setText(sql.consultaUnitaria("SELECT fNombre(" + sesID +");"));
-        fondos.setText(sql.consultaUnitaria("select usr_currency from usuarios where ((select usr_id from sesiones where (ses_id = " +sesID+")) = usr_id);"));
+        fondos.setText(sql.consultaUnitaria("SELECT fFondos(" + sesID +");"));
         
     }
 
@@ -152,15 +152,27 @@ public class Fondos extends javax.swing.JFrame {
         if(rB5.isSelected()){
             
             
-            sql.update(5, sesID);
+            try {
+                sql.Llamar("CALL actualizarFondos("+5+", "+sesID+");");
+            } catch (SQLException ex) {
+                Logger.getLogger(Fondos.class.getName()).log(Level.SEVERE, null, ex);
+            }
             labelMensaje.setText("5 fondos añididos :D");
         }
         else if(rB10.isSelected()){
-            sql.update(10, sesID);
+            try {
+                sql.Llamar("CALL actualizarFondos("+10+", "+sesID+");");
+            } catch (SQLException ex) {
+                Logger.getLogger(Fondos.class.getName()).log(Level.SEVERE, null, ex);
+            }
             labelMensaje.setText("10 fondos añididos :D");
         }
         else{
-            sql.update(15, sesID);
+            try {
+                sql.Llamar("CALL actualizarFondos("+15+", "+sesID+");");
+            } catch (SQLException ex) {
+                Logger.getLogger(Fondos.class.getName()).log(Level.SEVERE, null, ex);
+            }
             labelMensaje.setText("15 fondos añididos :D");
         }
         new Menu(sesID).setVisible(true);
