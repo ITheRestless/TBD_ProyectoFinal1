@@ -2,6 +2,7 @@ package tbd_proyectofinal;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 /**
  * @author Mauricio Avitia
@@ -121,6 +122,7 @@ public class Login extends javax.swing.JFrame {
         
         if(sesID > 0) {
             new Menu(sesID).setVisible(true);
+            JOptionPane.showMessageDialog(null, "Bienvenido!!");
             this.dispose();
         }
     }//GEN-LAST:event_jButton2ActionPerformed

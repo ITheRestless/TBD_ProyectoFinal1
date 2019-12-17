@@ -144,11 +144,9 @@ public class SignUp extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int sesID = new Conexion().SignUp(Correo.getText(), Usuario.getText(), Contraseña.getText());
         
-        if(sesID > 0) {
-            new Menu(sesID).setVisible(true);
-            JOptionPane.showMessageDialog(null, "Bienvenido " + Usuario.getText());
-            this.dispose();
-        }
+        new Login().setVisible(true);
+        JOptionPane.showMessageDialog(null, "Registrado con exito " + Usuario.getText());
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

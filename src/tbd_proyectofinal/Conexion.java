@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,7 +32,7 @@ public class Conexion {
     public Connection conectar(){         
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","root","");
+            conexion = (Connection)DriverManager.getConnection("jdbc:mysql://localhost/uwu?autoReconnect=true&useSSL=false","RPG_User","");
         } catch (ClassNotFoundException | SQLException ex) {    
             System.out.println("Error al conectar: " + ex);
         }
@@ -102,7 +103,7 @@ public class Conexion {
         try {
             conectar();
             
-                PreparedStatement st = conexion.prepareStatement("select LogIn('"+ 
+                PreparedStatement st = conexion.prepareStatement("select LogIn('"+  
                         correo +"','" +  
                         Md5(pass) + "','" + 
                         ip + "')");
@@ -214,6 +215,31 @@ public class Conexion {
         }  
     }
     
+    public ArrayList<Personaje> consultaPersnajes(String consulta) {
+        conectar();
+
+        ArrayList<Personaje> tabla = new ArrayList();
+                
+        try{
+            
+            Statement st;
+            st = (Statement) conexion.createStatement();
+            ResultSet rs = st.executeQuery(consulta);
+            
+            while(rs.next()){
+                tabla.add(new Personaje(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), 
+                        rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getInt(9)));
+            }
+            
+            desconectar();
+
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null,"Error"+ex);
+        }  
+        
+        return tabla;
+    }
+    
     public static String Md5(String input) 
     { 
         try { 
@@ -241,6 +267,8 @@ public class Conexion {
             throw new RuntimeException(e); 
         } 
     } 
+    
+    
 }
 
 

@@ -139,7 +139,7 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtUnidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtUnidadesActionPerformed
-        new CharPull(sesID).setVisible(true);
+        new Unidades(sesID).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ButtUnidadesActionPerformed
 

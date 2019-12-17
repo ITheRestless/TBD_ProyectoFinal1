@@ -9,6 +9,7 @@ CREATE TABLE usuarios(
     usr_pwd CHAR(32) NOT NULL,
     usr_currency INTEGER NOT NULL,
     usr_fecha_creacion DATETIME NOT NULL,
+    usr_uni_pref INTEGER,
     ses_id_creador INTEGER NOT NULL
 );
 
@@ -43,7 +44,8 @@ CREATE TABLE permisos(
 );
 
 CREATE TABLE inventario_uni(
-    inv_un_ud INTEGER AUTO_INCREMENT PRIMARY KEY,
+	inv_un_id integer primary key auto_increment,
+	inv_un_usr_id integer,
     inv_un_obtencion DATETIME NOT NULL,
     inv_un_hp INTEGER NOT NULL,
     inv_un_nivel TINYINT NOT NULL,
@@ -133,6 +135,10 @@ ALTER TABLE inventario_uni
 ADD CONSTRAINT ses2invuni
 FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
 
+alter table inventario_uni
+add constraint usr2inv_un
+foreign key (inv_un_usr_id) references usuarios(usr_id); 
+
 ALTER TABLE inventario_uni
 ADD CONSTRAINT unid2inveuni
 FOREIGN KEY (un_id) REFERENCES unidades (un_id);
@@ -143,7 +149,7 @@ FOREIGN KEY (ses_id) REFERENCES sesiones (ses_id);
 
 ALTER TABLE log
 ADD CONSTRAINT invuni2log
-FOREIGN KEY (inv_un_id) REFERENCES inventario_uni (inv_un_ud);
+FOREIGN KEY (inv_un_id) REFERENCES inventario_uni (inv_un_id);
 
 ALTER TABLE log
 ADD CONSTRAINT ses2log
@@ -407,14 +413,94 @@ BEGIN
     WHERE inventario_uni.ses_id = ses_id;
 END $
 
+
+-- __________________________________________________________________________________________________________________
+
+
+DELIMITER $$
+CREATE FUNCTION fimgPer(id INT)
+RETURNS VARCHAR(255)
+BEGIN
+SELECT COUNT(*) INTO @tam FROM  unidades WHERE  (id = ses_id);
+SELECT un_img INTO @imagen
+FROM unidades
+WHERE ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id) AND (un_id = FLOOR(1 + RAND() * (tam - 1)));
+RETURN @imagen;
+END $$
+DELIMITER ;
+
+
+-- __________________________________________________________________________________________________________________
+
+
+
+DELIMITER $$
+CREATE FUNCTION fFondos(ses_id_abierta INT)
+RETURNS INT
+BEGIN
+select usr_currency into @fondos from usuarios where ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
+RETURN @fondo;
+END $$
+DELIMITER ;
+
+
+-- __________________________________________________________________________________________________________________
+
+
+
+DELIMITER $$
+CREATE FUNCTION fNombre(ses_id_abierta INT)
+RETURNS VARCHAR (255)
+BEGIN
+select usr_nombre INTO @nombre from usuarios where ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
+RETURN @nombre;
+END $$
+DELIMITER ;
+
+
+-- __________________________________________________________________________________________________________________
+
+
+CREATE VIEW seleccionarUsuarios AS
+SELECT usr_nombre AS 'Usuario', usr_fecha_creacion AS 'Inicio' FROM usuarios ORDER BY usr_nombre LIMIT 3;
+
+
+-- __________________________________________________________________________________________________________________
+
+
+
+DELIMITER $$
+CREATE PROCEDURE actualizarFondos(IN compra INT, IN ses_id_abierta INT)
+BEGIN 
+UPDATE usuarios SET usr_currency = usr_currency + compra
+WHERE ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
+END $$
+DELIMITER ;
+
+
 -- __________________________________________________________________________________________________________________
 
 
 delimiter ;
 
 call Inicializar();
-select SignUp('restlessdisaster@gmail.com', 'TheRestless', md5('gangster12'), '127.0.0.1');
+select SignUp('restlessdisaster@gmail.com', 'TheRestless', md5('olamundo'), '127.0.0.1');
+
+INSERT INTO unidades (un_nombre, un_hp, un_rareza, un_atkinc, un_img, un_sprite, un_icono, ses_id)
+VALUES 
+('Albert', 100, 'SSR', 3, 'personajes\\imagenes\\albert_img.png', 'personajes\\sprites\\albert_sprite.png', 'personajes\\iconos\\albert_icono.png', 1),
+('Eugen', 150, 'SSR', 3, 'personajes\\imagenes\\eugen_img.png', 'personajes\\sprites\\eugen_sprite.png', 'personajes\\iconos\\eugen_icono.png', 1),
+('Juri', 125, 'SSR', 3, 'personajes\\imagenes\\juri_img.png', 'personajes\\sprites\\juri_sprite.png', 'personajes\\iconos\\juri_icono.png', 1),
+('Lecia', 90, 'SSR', 3, 'personajes\\imagenes\\lecia_img.png', 'personajes\\sprites\\lecia_sprite.png', 'personajes\\iconos\\lecia_icono.png', 1),
+('Nicholas', 200, 'SSR', 3, 'personajes\\imagenes\\nico_img.png', 'personajes\\sprites\\nico_sprite.png', 'personajes\\iconos\\nico_icono.png', 1),
+('Olivia', 180, 'SSR', 3, 'personajes\\imagenes\\olivia_img.png', 'personajes\\sprites\\olivia_sprite.png', 'personajes\\iconos\\olivia_icono.png', 1),
+('Percyval', 200, 'SSR', 3, 'personajes\\imagenes\\percy_img.png', 'personajes\\sprites\\percy_sprite.png', 'personajes\\iconos\\percy_icono.png', 1),
+('Rackam', 140, 'SSR', 3, 'personajes\\imagenes\\rackam_img.png', 'personajes\\sprites\\rackam_sprite.png', 'personajes\\iconos\\rackam_icono.png', 1),
+('Seruel', 160, 'SSR', 3, 'personajes\\imagenes\\seruel_img.png', 'personajes\\sprites\\seruel_sprite.png', 'personajes\\iconos\\seruel_icono.png', 1),
+('Siegfried', 250, 'SSR', 3, 'personajes\\imagenes\\Sieg_img.png', 'personajes\\sprites\\Sieg_sprite.png', 'personajes\\iconos\\Sieg_icono.png', 1);
+
 
 select * from usuarios;
 
 select LogIn('master@mail.com', md5('qwert12345'), '127.0.0.1');
+select * from sesiones;
