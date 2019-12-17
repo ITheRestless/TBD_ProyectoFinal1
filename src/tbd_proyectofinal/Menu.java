@@ -48,7 +48,7 @@ public class Menu extends javax.swing.JFrame {
         LabUsrName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabUsrName.setText("DonMau");
         getContentPane().add(LabUsrName);
-        LabUsrName.setBounds(157, 11, 360, 44);
+        LabUsrName.setBounds(140, 20, 400, 44);
 
         ButtFondos.setFont(new java.awt.Font("Bahnschrift", 1, 24)); // NOI18N
         ButtFondos.setForeground(new java.awt.Color(255, 255, 255));
@@ -99,7 +99,7 @@ public class Menu extends javax.swing.JFrame {
         ButtUnidades.setForeground(new java.awt.Color(255, 255, 255));
         ButtUnidades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Gifs/ResizedIddle.gif"))); // NOI18N
         ButtUnidades.setText("Unidades");
-        ButtUnidades.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ButtUnidades.setBorder(null);
         ButtUnidades.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtUnidades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
