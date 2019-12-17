@@ -30,7 +30,7 @@ public class Inventario extends javax.swing.JFrame {
     public int sesID;
     Conexion con;
     Statement st;
-    ResultSet rs, rs2;
+    ResultSet rs;
     Personaje pers;
     ArrayList <Personaje> lista;
     int cont;
@@ -46,24 +46,22 @@ public class Inventario extends javax.swing.JFrame {
         //Personaje psj2 = new Personaje(10000, 50000, 30000, 1000, "Jackson Michael ", "C:\\Users\\52871\\Desktop\\Pixiv\\yes.png", "C:\\Users\\52871\\Desktop\\Pixiv\\yes.png", "C:\\Users\\52871\\Desktop\\Pixiv\\yes.png", "SSSSR");
         //lista.add(psj);
         //lista.add(psj2);
-        String cueri = "SELECT un_id, inv_un_atk, inv_un_hp, inv_un_nivel FROM inventario_uni WHERE inv_un_usr_id = (SELECT usr_id FROM usuarios WHERE usuarios.ses_id_creador = "+sesID+")";
+        //String cueri = "SELECT un_id, inv_un_atk, inv_un_hp, inv_un_nivel FROM inventario_uni WHERE inv_un_usr_id = (SELECT sesiones.usr_id FROM sesiones WHERE sesiones.ses_id = "+sesID+")";
+        String cueri = "SELECT invu.un_id, invu.inv_un_atk, invu.inv_un_hp, invu.inv_un_nivel, uni.un_nombre, uni.un_rareza, uni.un_img, uni.un_sprite, uni.un_icono FROM inventario_uni AS invu INNER JOIN unidades AS uni ON (uni.un_id = invu.un_id) WHERE inv_un_usr_id = (SELECT sesiones.usr_id FROM sesiones WHERE ses_id = "+sesID+")";
         try {
             st = con.conexion.createStatement();
             rs = st.executeQuery(cueri);
             
             while(rs.next()){
-                pers.setId(rs.getInt("un_id"));
-                pers.setAtk(rs.getInt("inv_un_atk"));
-                pers.setHp(rs.getInt("inv_un_hp"));
-                pers.setNivel(rs.getInt("inv_un_nivel"));
-                
-                String cueri2 = "SELECT un_nombre, un_img, un_sprite, un_icono, un_rareza FROM unidades WHERE un_id = "+rs.getInt("un_id");
-                rs2 = st.executeQuery(cueri2);
-                pers.setNombre(rs2.getString(1));
-                pers.setImg(rs2.getString(2));
-                pers.setSprite(rs2.getString(3));
-                pers.setIcono(rs2.getString(4));
-                pers.setRareza(rs2.getString(5));
+                pers.setId(rs.getInt(1));
+                pers.setAtk(rs.getInt(2));
+                pers.setHp(rs.getInt(3));
+                pers.setNivel(rs.getInt(4));
+                pers.setNombre(rs.getString(5));
+                pers.setImg(rs.getString(7));
+                pers.setSprite(rs.getString(8));
+                pers.setIcono(rs.getString(9));
+                pers.setRareza(rs.getString(6));
                 lista.add(pers);
             }
         } 

@@ -2,6 +2,7 @@ package tbd_proyectofinal;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.Random;
 
 /**
  * @author Mauricio Avitia
@@ -13,9 +14,21 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
         this.sesID = sesID;
         Conexion sql = new Conexion();
-        LabUsrName.setText(sql.consultaUnitaria("SELECT fNombre(" + sesID +");"));
-        labelFondos.setText(sql.consultaUnitaria("select usr_currency from usuarios where ((select usr_id from sesiones where (ses_id = " +sesID+")) = usr_id);"));
         
+        //String permiso = sql.consultaUnitaria("select perm_permiso from permisos where(ses_id_creador = "+sesID+");");
+        String permiso = "FFFFF11";
+        String sSubCadena = permiso.substring(6,7);
+        System.out.println(sSubCadena);
+        if (sSubCadena != "F"){
+            jButton2.setEnabled(false);
+        }
+        else jButton2.setEnabled(true);
+        LabUsrName.setText(sql.consultaUnitaria("SELECT fNombre(" + sesID +");"));
+        labelFondos.setText(sql.consultaUnitaria("SELECT fFondos(" + sesID +");"));
+        String []h = {"Te queremos", "Echale ganas", "Eres genial", "Gracias por jugar", "Que guapa persona", "Eres especial",
+        "Guapo el que lo lea", "Hola mundo"};
+        Random a = new Random();
+        mensaje.setText(h[a.nextInt(h.length)]);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
@@ -35,6 +48,7 @@ public class Menu extends javax.swing.JFrame {
         labelFondos = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        mensaje = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -141,6 +155,10 @@ public class Menu extends javax.swing.JFrame {
         getContentPane().add(jButton2);
         jButton2.setBounds(350, 410, 120, 30);
 
+        mensaje.setFont(new java.awt.Font("Bahnschrift", 0, 12)); // NOI18N
+        getContentPane().add(mensaje);
+        mensaje.setBounds(40, 430, 460, 30);
+
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sprites/Gifs/MenuBack2.gif"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -220,5 +238,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel labelFondos;
+    private javax.swing.JLabel mensaje;
     // End of variables declaration//GEN-END:variables
 }

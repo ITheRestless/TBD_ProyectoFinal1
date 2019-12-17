@@ -68,10 +68,10 @@ CREATE TABLE unidades(
 );
 
 CREATE TABLE log(
-    inv_un_id INTEGER NOT NULL, 
+    inv_un_id INTEGER NOT NULL,
     ses_id INTEGER NOT NULL,
     id_mision INTEGER NOT NULL,
-    log_fecha DATETIME	
+    log_fecha DATETIME
 );
 
 CREATE TABLE misiones(
@@ -99,7 +99,7 @@ CREATE TABLE enemigos(
 -- CONSTRAINTS:
 
 ALTER TABLE usuarios
-ADD CONSTRAINT ses2usr 
+ADD CONSTRAINT ses2usr
 FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
 
 ALTER TABLE roles_usuario
@@ -137,7 +137,7 @@ FOREIGN KEY (ses_id_creador) REFERENCES sesiones (ses_id);
 
 alter table inventario_uni
 add constraint usr2inv_un
-foreign key (inv_un_usr_id) references usuarios(usr_id); 
+foreign key (inv_un_usr_id) references usuarios(usr_id);
 
 ALTER TABLE inventario_uni
 ADD CONSTRAINT unid2inveuni
@@ -223,7 +223,7 @@ begin
 
 		insert into roles(rol_nombre, ses_id_creador)
 		values('super', '1');
-        
+
         insert into roles(rol_nombre, ses_id_creador)
 		values('user', '1');
 
@@ -235,9 +235,9 @@ begin
 
 		insert into permisos(perm_permiso, perm_tiempo, ses_id_creador, rol_id)
 		values('0FFFFFF', now(), '1', '2');
-        
+
 		ALTER TABLE usuarios
-		ADD CONSTRAINT ses2usr 
+		ADD CONSTRAINT ses2usr
 		FOREIGN KEY (ses_id_creador) REFERENCES sesiones(ses_id);
 
 		ALTER TABLE roles_usuario
@@ -307,29 +307,29 @@ begin
 -- Se busca el id de usuario y el de la sesion
 select usr_id into @Uid from usuarios where (usr_correo = correo);
 select ses_id into @Sid from sesiones where (@Uid = usr_id) AND (IP = ses_ip);
-            
+
 -- si existe un usuario con ese correo
 if (correo in (select usr_correo from usuarios)) then
 
 	-- si la contraseña es correcta
-	if (pass = (select usr_pwd from usuarios where (correo = usr_correo))) then 
-        
+	if (pass = (select usr_pwd from usuarios where (correo = usr_correo))) then
+
         -- si no hay una sesion con la ip actual, se añade una nueva
         if (IP not in (select ses_ip from sesiones where (sesiones.usr_id = (select usr_id from usuarios where (usr_correo = correo))))) then
-            
+
             -- insertar nueva sesion con la ip indicada
             insert into sesiones(ses_ip, ses_inicio, ses_fin, ses_ult_act, usr_id) values
             (IP, now(), null, now(), @Uid);
-		
+
         else
             -- Se actuaizan los datos de la sesion actual
             call IniSes(@Sid);
             call doAction(@Sid);
         end if;
-    else 
-		set @Sid = -2; 
+    else
+		set @Sid = -2;
     end if;
-else 
+else
 	set @Sid = -1;
 end if;
 
@@ -349,7 +349,7 @@ insert into usuarios(usr_correo, usr_nombre, usr_pwd, usr_currency, usr_fecha_cr
 values (correo, nombre, pwd, '5', now(), '1');
 
 set @Sid = LogIn(correo, pwd, IP);
- 
+
 return @Sid;
 end;;
 
@@ -425,15 +425,15 @@ DELIMITER ;
 
 -- __________________________________________________________________________________________________________________
 
-
-
+//Actualizado 17/12
+DROP FUNCTION fFondos;
 DELIMITER $$
 CREATE FUNCTION fFondos(ses_id_abierta INT)
 RETURNS INT
 BEGIN
-select usr_currency into @fondos from usuarios where ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
+select usr_currency INTO @fondo from usuarios where ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
 RETURN @fondo;
-END $$
+END$$
 DELIMITER ;
 
 
@@ -455,7 +455,7 @@ DELIMITER ;
 
 DELIMITER $$
 CREATE PROCEDURE actualizarFondos(IN compra INT, IN ses_id_abierta INT)
-BEGIN 
+BEGIN
 UPDATE usuarios SET usr_currency = usr_currency + compra
 WHERE ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
 END $$
@@ -489,13 +489,21 @@ end;;
 
 delimiter ;;
 create trigger SesionAbierta
-before update 
+before update
 on sesiones for each row
 begin
 	if (old.ses_fin = null) then
 			set new.ses_fin = now();
 	end if;
 end;;
+
+//Actualizado el 17/12
+DELIMITER $$
+CREATE PROCEDURE actualizarFondos(IN compra INT, IN ses_id_abierta INT)
+BEGIN
+update usuarios SET usr_currency = usr_currency + compra where ((select usr_id from sesiones where (ses_id = ses_id_abierta  )) = usr_id);
+END $$
+DELIMITER ;
 
 
 -- __________________________________________________________________________________________________________________
@@ -505,7 +513,7 @@ end;;
 delimiter ;;
 
 create trigger VerificarFondos
-before update 
+before update
 on usuarios for each row
 begin
 	if (new.usr_currency > 100) then
@@ -537,7 +545,7 @@ call Inicializar();
 select SignUp('restlessdisaster@gmail.com', 'TheRestless', md5('olamundo'), '127.0.0.1');
 
 INSERT INTO unidades (un_nombre, un_hp, un_rareza, un_atkinc, un_img, un_sprite, un_icono, ses_id)
-VALUES 
+VALUES
 ('Albert', 100, 'SSR', 3, 'personajes\\imagenes\\albert_img.png', 'personajes\\sprites\\albert_sprite.png', 'personajes\\iconos\\albert_icono.png', 1),
 ('Eugen', 150, 'SSR', 3, 'personajes\\imagenes\\eugen_img.png', 'personajes\\sprites\\eugen_sprite.png', 'personajes\\iconos\\eugen_icono.png', 1),
 ('Juri', 125, 'SSR', 3, 'personajes\\imagenes\\juri_img.png', 'personajes\\sprites\\juri_sprite.png', 'personajes\\iconos\\juri_icono.png', 1),
@@ -556,9 +564,16 @@ select LogIn('master@mail.com', md5('qwert12345'), '127.0.0.1');
 
 select * from sesiones;
 
-call utilizarFondos('2');
-select mostrarInvocacion('2');
-select MAX(inv_un_id) from inventario_uni 
-                            join usuarios on (usr_id)
-                            join sesiones on (ses_id = '2');
-                    
+
+INSERT INTO unidades (un_nombre, un_hp, un_rareza, un_atkinc, un_img, un_sprite, un_icono, ses_id)
+VALUES
+('Canela', 100, 'SSR', 3, 'personajes\\imagenes\\canela_img.png', 'personajes\\sprites\\canela_sprite.png', 'personajes\\iconos\\canela_icono.png', 1),
+('cuphead', 150, 'SSR', 3, 'personajes\\imagenes\\cuphead_img.png', 'personajes\\sprites\\cuphead_sprite.png', 'personajes\\iconos\\cuphead_icono.png', 1),
+('Dio', 125, 'SSR', 3, 'personajes\\imagenes\\dio_img.png', 'personajes\\sprites\\dio_sprite.png', 'personajes\\iconos\\dio_icono.png', 1),
+('Jotaro', 90, 'SSR', 3, 'personajes\\imagenes\\jotaro_img.png', 'personajes\\sprites\\jotaro_sprite.png', 'personajes\\iconos\\jotaro_icono.png', 1),
+('Pikachu', 200, 'SSR', 3, 'personajes\\imagenes\\pikachu_img.png', 'personajes\\sprites\\pikachu_sprite.png', 'personajes\\iconos\\pikachu_icono.png', 1),
+('Ruby', 180, 'SSR', 3, 'personajes\\imagenes\\ruby_img.png', 'personajes\\sprites\\ruby_sprite.png', 'personajes\\iconos\\ruby_icono.png', 1),
+('Samus', 200, 'SSR', 3, 'personajes\\imagenes\\samus_img.png', 'personajes\\sprites\\samus_sprite.png', 'personajes\\iconos\\samus_icono.png', 1),
+('Sans', 140, 'SSR', 3, 'personajes\\imagenes\\sans_img.png', 'personajes\\sprites\\sans_sprite.png', 'personajes\\iconos\\sans_icono.png', 1),
+('Sasuke', 160, 'SSR', 3, 'personajes\\imagenes\\sasuke_img.png', 'personajes\\sprites\\sasuke_sprite.png', 'personajes\\iconos\\sasuke_icono.png', 1),
+('Vegeta', 250, 'SSR', 3, 'personajes\\imagenes\\vegeta_img.png', 'personajes\\sprites\\vegeta_sprite.png', 'personajes\\iconos\\vegeta_icono.png', 1);
