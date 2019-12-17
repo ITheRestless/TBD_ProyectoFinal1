@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 public class Conexion {
     
     //Atributo
-    public Connection conexion = null;
+    private Connection conexion = null;
    
     //Métodos
     public Connection conectar(){         
@@ -86,8 +86,6 @@ public class Conexion {
         return numero;
     }
     
-
-    
     public int LogIn(String correo, String pass) {
         String ip = "";
         try {
@@ -128,27 +126,6 @@ public class Conexion {
         return numero;
     }
     
-    public void update(String consulta) {
-        
-        try{
-            conectar();
-            
-            Statement st;
-            st = (Statement) conexion.createStatement();
-            ResultSet rs = st.executeQuery(consulta);
-           
-            rs.next();
-            
-            
-            st.close();
-            rs.close();
-            desconectar();
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     public String consultaUnitaria(String consulta) {
         String cad = "";
         
@@ -173,7 +150,58 @@ public class Conexion {
         
         return cad;
     }
+    public void update(int cantidad, int id)
+    {
+    try
+    {
+      // create a java mysql database connection
+      conectar();
+      // create the java mysql update preparedstatement
+      String query = "update usuarios SET usr_currency = usr_currency + "+cantidad+ " where ((select usr_id from sesiones where (ses_id =" +id+"  )) = usr_id)";
+      PreparedStatement preparedStmt = conexion.prepareStatement(query);
+      preparedStmt.executeUpdate();
+      
+      desconectar();
+    }
+    catch (Exception e)
+    {
+      System.err.println("Got an exception! ");
+      System.err.println(e.getMessage());
+    }
+  }
+
     
+    /*public void Llamada(String consulta, int id, int c) throws SQLException {
+        
+            conectar();
+            
+            CallableStatement sp = conexion.prepareCall(" CALL contar_productos(?,?)");
+//se cargan los parametros de entrada
+sp.setInt(2, id);//Tipo String
+sp.setInt(1,c);
+// parametros de salida
+//sp.registerOutParameter("nproductos", Types.VARCHAR);//Tipo String
+// Se ejecuta el procedimiento almacenado
+sp.execute();            
+           
+            //rs.next();
+            
+            
+            
+            //sp.close();
+            //rs.close();
+            desconectar();
+            
+       
+    }*/
+    
+    /*public void Update(int sesID) throws SQLException{
+        conectar();
+        PreparedStatement stmt = (PreparedStatement) conexion.createStatement();
+        String q1 = "UPDATE usuarios SET usr_currency = usr_currency + 5 WHERE ((select usr_id from sesiones where (ses_id ="+sesID+")) = usr_id)"; 
+           // int x = stmt.executeUpdate(q1); 
+    }
+    */
     public void consulta(JTable tabla, String consulta) {
         
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
