@@ -356,16 +356,17 @@ end;;
 
 -- ________________________________________________________________________________________________________
 
-
+drop function invocar;
 DELIMITER $
-CREATE FUNCTION invocar(ses_id INT)
+CREATE FUNCTION invocar(ses INT)
 RETURNS INT
 BEGIN
-	CALL utilizarFondos(ses_id);
+	CALL utilizarFondos(ses);
 	SELECT COUNT(*) INTO @tam FROM unidades;
     	SELECT FLOOR(1 + RAND()*(@tam - 1)) INTO @dato;
     	SELECT un_atkinc INTO @atk FROM unidades WHERE (un_id = @dato);
-    	INSERT INTO inventario_uni (inv_un_obtencion, inv_un_nivel, inv_un_exp, inv_un_atk, ses_id, un_id) VALUES (NOW(), 1, 0, @atk, ses_id, @dato);
+        SELECT un_hp INTO @hp FROM unidades WHERE (un_id = @dato);
+    	INSERT INTO inventario_uni (inv_un_obtencion, inv_un_nivel, inv_un_exp, inv_un_atk, inv_un_hp, ses_id_creador, un_id) VALUES (NOW(), 1, 0, @atk, @hp, ses, @dato);
     	RETURN @dato;
 END$
 
@@ -378,34 +379,20 @@ CREATE FUNCTION mostrarInvocacion(ses_id INT)
 RETURNS VARCHAR(255)
 BEGIN
 	SET @dato = invocar(ses_id);
-    SET @dirImg = (SELECT un_img FROM unidades WHERE un_img = @dato);
+    SET @dirImg = (SELECT un_img FROM unidades WHERE (un_id = @dato));
     RETURN @dirImg;
 END $
 
--- _________________________________________________________________________________________________________
-
-
--- Habilita el botón de invocar
-CREATE FUNCTION verificarFondos(id INT)
-RETURNS BOOLEAN
-BEGIN
-	SELECT usuarios.usr_currency INTO @fondos FROM usuarios WHERE (ses_id = id);
-	IF(@fondos > 5) THEN
-    	return TRUE;
-    ELSE
-    	return FALSE;
-    END IF;
-END$
-
 
 -- _________________________________________________________________________________________________________
 
-
+drop procedure utilizarFondos;
 DELIMITER $
-CREATE PROCEDURE utilizarFondos (IN ses_id INT)
+CREATE PROCEDURE utilizarFondos (id INT)
 BEGIN
+	select usuarios.usr_id into @usr from usuarios join sesiones on (usuarios.usr_id = sesiones.usr_id) where (id = ses_id);
 	UPDATE usuarios
-    SET usuarios.usr_currency = usr_currency - 5;
+    SET usuarios.usr_currency = usr_currency - 5 where usuarios.usr_id = @usr;
 END$
 
 -- _________________________________________________________________________________________________________
@@ -463,40 +450,7 @@ RETURN @nombre;
 END $$
 DELIMITER ;
 
-
 -- __________________________________________________________________________________________________________________
-
-
-CREATE VIEW seleccionarUsuarios AS
-SELECT usr_nombre AS 'Usuario', usr_fecha_creacion AS 'Inicio' FROM usuarios ORDER BY usr_nombre LIMIT 3;
-
-
--- __________________________________________________________________________________________________________________
-
-
-delimiter ;;
-
-create trigger VerificarFondos
-before update 
-on usuarios for each row
-begin
-	if (new.usr_currency > 100) then
-			set new.usr_currency = 100;
-	end if;
-end;;
-
--- __________________________________________________________________________________________________________________
-
-
-delimiter ;;
-create trigger SesionAbierta
-before update 
-on sesiones for each row
-begin
-	if (old.ses_fin = null) then
-			set new.ses_fin = now();
-	end if;
-end;;
 
 
 DELIMITER $$
@@ -511,14 +465,67 @@ DELIMITER ;
 -- __________________________________________________________________________________________________________________
 
 
+
+											-- Triggers
+
+
+-- __________________________________________________________________________________________________________________
+
+
 delimiter ;;
 
 create trigger registraRoles
 after insert
 on usuarios for each row
+begin
 insert into roles_usuario(ru_tiempo, usr_id, rol_id, ses_id_creador)
 values(now(), new.usr_id, '2', '1');
 end;;
+
+
+-- __________________________________________________________________________________________________________________
+
+
+
+delimiter ;;
+create trigger SesionAbierta
+before update 
+on sesiones for each row
+begin
+	if (old.ses_fin = null) then
+			set new.ses_fin = now();
+	end if;
+end;;
+
+
+-- __________________________________________________________________________________________________________________
+
+
+
+delimiter ;;
+
+create trigger VerificarFondos
+before update 
+on usuarios for each row
+begin
+	if (new.usr_currency > 100) then
+			set new.usr_currency = 100;
+	end if;
+end;;
+
+
+-- _________________________________________________________________________________________________________________
+
+
+													-- Vistas
+
+
+-- _________________________________________________________________________________________________________________
+
+
+
+CREATE VIEW seleccionarUsuarios AS
+SELECT usr_nombre AS 'Usuario', usr_fecha_creacion AS 'Inicio' FROM usuarios ORDER BY usr_nombre LIMIT 3;
 
 
 -- __________________________________________________________________________________________________________________
@@ -546,4 +553,12 @@ VALUES
 select * from usuarios;
 
 select LogIn('master@mail.com', md5('qwert12345'), '127.0.0.1');
+
 select * from sesiones;
+
+call utilizarFondos('2');
+select mostrarInvocacion('2');
+select MAX(inv_un_id) from inventario_uni 
+                            join usuarios on (usr_id)
+                            join sesiones on (ses_id = '2');
+                    

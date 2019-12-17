@@ -2,6 +2,12 @@ package tbd_proyectofinal;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * @author Mauricio Avitia
@@ -36,9 +42,9 @@ public class Invocar extends javax.swing.JFrame {
         labelFondos = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        Rareza = new javax.swing.JLabel();
+        Imagen = new javax.swing.JLabel();
+        Nombre = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(780, 490));
@@ -78,26 +84,26 @@ public class Invocar extends javax.swing.JFrame {
         jPanel1.add(jButton3);
         jButton3.setBounds(120, 0, 320, 490);
 
-        jLabel2.setFont(new java.awt.Font("Garamond", 3, 48)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("R");
-        jPanel1.add(jLabel2);
-        jLabel2.setBounds(640, 400, 120, 60);
+        Rareza.setFont(new java.awt.Font("Garamond", 3, 48)); // NOI18N
+        Rareza.setForeground(new java.awt.Color(255, 255, 255));
+        Rareza.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Rareza.setText("R");
+        jPanel1.add(Rareza);
+        Rareza.setBounds(640, 400, 120, 60);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("X");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(470, 70, 290, 400);
+        Imagen.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        Imagen.setForeground(new java.awt.Color(255, 255, 255));
+        Imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Imagen.setText("X");
+        jPanel1.add(Imagen);
+        Imagen.setBounds(470, 70, 290, 400);
 
-        jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("nombre");
-        jPanel1.add(jLabel4);
-        jLabel4.setBounds(470, 30, 290, 30);
+        Nombre.setFont(new java.awt.Font("Bahnschrift", 1, 24)); // NOI18N
+        Nombre.setForeground(new java.awt.Color(255, 255, 255));
+        Nombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Nombre.setText("nombre");
+        jPanel1.add(Nombre);
+        Nombre.setBounds(470, 30, 290, 30);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 780, 490);
@@ -106,7 +112,23 @@ public class Invocar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        Conexion sql = new Conexion();
+        
+        String ruta = sql.consultaUnitaria("select mostrarInvocacion + " + sesID);
+        
+        try {
+            String un_id = sql.consultaUnitaria(
+                    "select MAX(inv_un_id) from inventario_uni "
+                            + "join usuarios on (usr_id) "
+                            + "join sesiones on (ses_id = '" + sesID + "')");
+            
+            Imagen.setIcon(new ImageIcon(ImageIO.read(new File(ruta))));
+            Nombre.setText(sql.consultaUnitaria("select un_nombre from unidades where un_id = '" + un_id + "'"));
+            Rareza.setText(sql.consultaUnitaria("select un_nombre from unidades where un_id = '" + un_id + "'"));
+            labelFondos.setText(sql.consultaUnitaria("select usr_currency from usuarios where ((select usr_id from sesiones where (ses_id = " +sesID+")) = usr_id);"));
+        } catch (IOException ex) {
+            Logger.getLogger(Invocar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -150,11 +172,11 @@ public class Invocar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Imagen;
+    private javax.swing.JLabel Nombre;
+    private javax.swing.JLabel Rareza;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelFondos;
     // End of variables declaration//GEN-END:variables
