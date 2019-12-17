@@ -356,7 +356,6 @@ end;;
 
 -- ________________________________________________________________________________________________________
 
-drop function invocar;
 DELIMITER $
 CREATE FUNCTION invocar(ses INT)
 RETURNS INT
@@ -386,7 +385,7 @@ END $
 
 -- _________________________________________________________________________________________________________
 
-drop procedure utilizarFondos;
+
 DELIMITER $
 CREATE PROCEDURE utilizarFondos (id INT)
 BEGIN
@@ -425,8 +424,7 @@ DELIMITER ;
 
 -- __________________________________________________________________________________________________________________
 
-//Actualizado 17/12
-DROP FUNCTION fFondos;
+
 DELIMITER $$
 CREATE FUNCTION fFondos(ses_id_abierta INT)
 RETURNS INT
@@ -454,7 +452,7 @@ DELIMITER ;
 
 
 DELIMITER $$
-CREATE PROCEDURE actualizarFondos(IN compra INT, IN ses_id_abierta INT)
+CREATE PROCEDURE actualizaFondos(IN compra INT, IN ses_id_abierta INT)
 BEGIN
 UPDATE usuarios SET usr_currency = usr_currency + compra
 WHERE ((select usr_id from sesiones where (ses_id = ses_id_abierta)) = usr_id);
@@ -497,7 +495,11 @@ begin
 	end if;
 end;;
 
-//Actualizado el 17/12
+
+-- __________________________________________________________________________________________________________________
+
+
+
 DELIMITER $$
 CREATE PROCEDURE actualizarFondos(IN compra INT, IN ses_id_abierta INT)
 BEGIN
@@ -523,6 +525,27 @@ end;;
 
 
 -- _________________________________________________________________________________________________________________
+
+
+
+DELIMITER $
+CREATE TRIGGER primerPersonaje
+AFTER INSERT
+ON usuarios FOR EACH ROW
+BEGIN
+	SET @Atk = (SELECT unidades.un_atkinc FROM unidades WHERE (unidades.un_id = 1));
+    SET @Hp = (SELECT unidades.un_hp FROM unidades WHERE (unidades.un_id = 1));
+    
+	INSERT INTO inventario_uni (inv_un_atk, inv_un_exp, inv_un_hp, inv_un_nivel, inv_un_obtencion, inv_un_usr_id, ses_id_creador, un_id)
+    VALUES ('50', 0, '100', 1, NOW(), NEW.usr_id, 1, 1);
+END$
+DELIMITER ;
+
+
+
+
+-- _________________________________________________________________________________________________________________
+
 
 
 													-- Vistas

@@ -29,7 +29,7 @@ public class PoolUnidades extends javax.swing.JFrame {
 
         Conexion sql = new Conexion();
         //pers = sql.consultaPersnajes("select * from unidades");
-        pers = sql.consultaPersnajes("SELECT un_id, un_nombre, un_hp, un_rareza, un_atk, un_img, un_sprite, un_icono, ses_id FROM unidades");
+        pers = sql.consultaPersnajes("SELECT un_id, un_nombre, un_hp, un_rareza, un_atkinc, un_img, un_sprite, un_icono, ses_id FROM unidades");
         MostrarPagina();
     }
     

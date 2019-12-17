@@ -1,7 +1,9 @@
 package tbd_proyectofinal;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -114,7 +116,7 @@ public class Invocar extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Conexion sql = new Conexion();
         
-        String ruta = sql.consultaUnitaria("select mostrarInvocacion + " + sesID);
+        String ruta = sql.consultaUnitaria("select mostrarInvocacion('" + sesID + "')");
         
         try {
             String un_id = sql.consultaUnitaria(
@@ -122,9 +124,11 @@ public class Invocar extends javax.swing.JFrame {
                             + "join usuarios on (usr_id) "
                             + "join sesiones on (ses_id = '" + sesID + "')");
             
-            Imagen.setIcon(new ImageIcon(ImageIO.read(new File(ruta))));
+            BufferedImage img = ImageIO.read(new File(ruta));
+            Image dimg  = img.getScaledInstance(Imagen.getWidth(), Imagen.getHeight(), Image.SCALE_SMOOTH);
+            Imagen.setIcon(new ImageIcon(dimg));
             Nombre.setText(sql.consultaUnitaria("select un_nombre from unidades where un_id = '" + un_id + "'"));
-            Rareza.setText(sql.consultaUnitaria("select un_nombre from unidades where un_id = '" + un_id + "'"));
+            Rareza.setText(sql.consultaUnitaria("select un_rareza from unidades where un_id = '" + un_id + "'"));
             labelFondos.setText(sql.consultaUnitaria("select usr_currency from usuarios where ((select usr_id from sesiones where (ses_id = " +sesID+")) = usr_id);"));
         } catch (IOException ex) {
             Logger.getLogger(Invocar.class.getName()).log(Level.SEVERE, null, ex);

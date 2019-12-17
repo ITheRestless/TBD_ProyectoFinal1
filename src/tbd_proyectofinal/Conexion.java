@@ -261,7 +261,7 @@ sp.execute();
             
             while(rs.next()){
                 tabla.add(new Personaje(rs.getInt("un_id"), rs.getString("un_nombre"), rs.getInt("un_hp"), rs.getString("un_rareza"), 
-                        rs.getInt("un_atk"), rs.getString("un_img"), rs.getString("un_sprite"), rs.getString("un_icono"), rs.getInt("ses_id")));
+                        rs.getInt("un_atkinc"), rs.getString("un_img"), rs.getString("un_sprite"), rs.getString("un_icono"), rs.getInt("ses_id")));
             }
             
             desconectar();
